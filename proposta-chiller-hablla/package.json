@@ -1,0 +1,18 @@
+{
+  "name": "proposta-chiller-hablla",
+  "version": "1.0.0",
+  "description": "Template de Proposta Comercial - Chiller Peças (Integração Hablla)",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Build complete'"
+  },
+  "keywords": [
+    "proposta",
+    "comercial",
+    "chiller",
+    "hablla"
+  ],
+  "author": "Chiller Peças",
+  "license": "MIT"
+}
