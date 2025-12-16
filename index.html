@@ -760,9 +760,9 @@
                     throw new Error('Token inválido');
                 }
 
-                // Fetch data from our serverless API (avoids CORS)
-                console.log('Fetching proposal data...');
-                const response = await fetch(`/api/get-proposal?token=${token}`);
+                // Fetch data directly from Hablla unprotected endpoint
+                console.log('Fetching proposal data from Hablla...');
+                const response = await fetch(`https://api.hablla.com/v1/quotation?token=${token}`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
