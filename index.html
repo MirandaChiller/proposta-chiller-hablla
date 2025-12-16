@@ -752,21 +752,17 @@
                     throw new Error('Token não encontrado na URL');
                 }
 
-                // Decode token to get proposal ID
+                // Decode token - O TOKEN JÁ CONTÉM TODOS OS DADOS!
                 const tokenData = decodeToken(token);
-                if (!tokenData || !tokenData.id) {
+                console.log('Token decoded:', tokenData);
+
+                if (!tokenData) {
                     throw new Error('Token inválido');
                 }
 
-                // Fetch proposal data from Hablla API
-                const response = await fetch(`https://api.hablla.com/quotation/${tokenData.id}?token=${token}`);
-                
-                if (!response.ok) {
-                    throw new Error('Erro ao buscar dados da proposta');
-                }
-
-                const data = await response.json();
-                console.log('Proposal data:', data);
+                // O Hablla envia os dados completos no token JWT
+                // Não precisamos fazer fetch externo!
+                const data = tokenData;
 
                 // Populate the template
                 populateTemplate(data);
