@@ -1,7 +1,7 @@
 // API Route: /api/get-proposal
 // Função serverless que busca dados do Hablla sem CORS
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Habilitar CORS para nosso domínio
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
