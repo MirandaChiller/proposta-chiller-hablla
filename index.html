@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial - Chiller Peças</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Loading Screen */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+        }
+
+        #loading.hidden {
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .container.visible {
+            display: block;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            padding: 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .company-logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .company-info {
+            font-size: 12px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .proposal-number {
+            text-align: right;
+        }
+
+        .proposal-number h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .proposal-number .number {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .proposal-date {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 5px;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Client Section */
+        .client-section {
+            padding: 30px 40px;
+            background: #f8f9fa;
+            border-left: 4px solid #0066cc;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0066cc;
+            margin-bottom: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #0066cc;
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .client-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Items Table */
+        .items-section {
+            padding: 30px 40px;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .items-table thead {
+            background: #0066cc;
+            color: white;
+        }
+
+        .items-table th {
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .items-table tbody tr {
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .items-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .items-table td {
+            padding: 15px 12px;
+            font-size: 13px;
+        }
+
+        .product-code {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: #333;
+            line-height: 1.4;
+        }
+
+        /* Totals */
+        .totals-section {
+            padding: 30px 40px;
+            background: #f8f9fa;
+        }
+
+        .totals-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+        }
+
+        .payment-info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .payment-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .payment-item .label {
+            color: #6c757d;
+        }
+
+        .payment-item .value {
+            font-weight: 500;
+        }
+
+        .totals-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 14px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .total-row:last-child {
+            border-bottom: none;
+        }
+
+        .total-row.final {
+            background: #0066cc;
+            color: white;
+            padding: 15px;
+            margin: 10px -20px -20px -20px;
+            border-radius: 0 0 8px 8px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Info Cards */
+        .info-section {
+            padding: 30px 40px;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #0066cc;
+        }
+
+        .info-card-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+
+        .info-card-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            word-break: break-word;
+        }
+
+        /* Terms */
+        .terms-section {
+            padding: 30px 40px;
+            background: #fff9e6;
+            border-top: 2px solid #ffc107;
+        }
+
+        .terms-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .terms-title::before {
+            content: '⚠️';
+            margin-right: 10px;
+        }
+
+        .terms-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ffe69c;
+        }
+
+        .terms-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .terms-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .terms-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #0066cc;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .footer-content {
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer-highlight {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        /* Error Message */
+        .error-message {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .error-title {
+            font-size: 24px;
+            color: #dc3545;
+            margin-bottom: 10px;
+        }
+
+        .error-text {
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            .proposal-number {
+                text-align: left;
+                margin-top: 20px;
+            }
+            .client-grid {
+                grid-template-columns: 1fr;
+            }
+            .totals-grid {
+                grid-template-columns: 1fr;
+            }
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+            }
+            #loading, .error-message {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div style="text-align: center;">
+            <div class="spinner"></div>
+            <p style="margin-top: 20px; font-size: 18px;">Carregando proposta...</p>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div id="error" class="error-message">
+        <div class="error-icon">⚠️</div>
+        <div class="error-title">Erro ao Carregar Proposta</div>
+        <div class="error-text">
+            Não foi possível carregar os dados da proposta.<br>
+            Verifique se o link está correto ou entre em contato com nosso suporte.
+        </div>
+        <p style="color: #6c757d; font-size: 12px; margin-top: 20px;">
+            📞 (11) 2918-8119 | 📧 contato@chillerpecas.com.br
+        </p>
+    </div>
+
+    <!-- Main Container -->
+    <div id="proposal-container" class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div>
+                    <div class="company-logo">🧊 CHILLER PEÇAS</div>
+                    <div class="company-info">
+                        CHILLER COMÉRCIO DE PEÇAS E ACESSÓRIOS LTDA<br>
+                        www.chillerpecas.com.br | #RE574.706-2017<br>
+                        CNPJ: 35.028.609/0001-53 | IE: 126.847.127.115<br>
+                        Rua Antônio de Barros, 1093 - Tatuapé<br>
+                        São Paulo - SP - CEP: 03401-000<br>
+                        Tel: (11) 2918-8119
+                    </div>
+                </div>
+                <div class="proposal-number">
+                    <h1>Proposta Comercial</h1>
+                    <div class="number" id="proposal-id">#...</div>
+                    <div class="proposal-date">
+                        Gerada em: <span id="proposal-date">...</span><br>
+                        Validade: 5 dias úteis
+                        <div class="status-badge" id="proposal-status">Carregando...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Information -->
+        <div class="client-section">
+            <div class="section-title">Informações do Cliente</div>
+            <div class="client-grid">
+                <div class="info-item">
+                    <div class="info-label">Nome / Razão Social</div>
+                    <div class="info-value" id="client-name">...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">CPF / CNPJ</div>
+                    <div class="info-value" id="client-document">...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Telefone</div>
+                    <div class="info-value" id="client-phone">...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Status</div>
+                    <div class="info-value" id="client-status">...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Contato</div>
+                    <div class="info-value" id="contact-name">...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">WhatsApp</div>
+                    <div class="info-value" id="client-whatsapp">...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Items -->
+        <div class="items-section">
+            <div class="section-title">Itens da Proposta</div>
+            
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descrição</th>
+                        <th style="text-align: center;">Qtd</th>
+                        <th style="text-align: right;">Valor Unit.</th>
+                        <th style="text-align: right;">Desconto</th>
+                        <th style="text-align: right;">Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody id="products-table">
+                    <!-- Products will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Totals -->
+        <div class="totals-section">
+            <div class="totals-grid">
+                <div class="payment-info">
+                    <div class="payment-title">Condições de Pagamento</div>
+                    <div class="payment-item">
+                        <span class="label">Condição:</span>
+                        <span class="value" id="payment-condition">...</span>
+                    </div>
+                    <div class="payment-item">
+                        <span class="label">Código:</span>
+                        <span class="value" id="payment-code">...</span>
+                    </div>
+                    <div class="payment-item">
+                        <span class="label">Data Prevista:</span>
+                        <span class="value" id="prediction-date">...</span>
+                    </div>
+                </div>
+
+                <div class="totals-box">
+                    <div class="total-row">
+                        <span>Desconto:</span>
+                        <span style="color: #28a745;" id="total-discount">- R$ 0,00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Frete:</span>
+                        <span id="total-shipping">R$ 0,00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Impostos:</span>
+                        <span id="total-taxes">R$ 0,00</span>
+                    </div>
+                    <div class="total-row final">
+                        <span>VALOR TOTAL:</span>
+                        <span id="total-value">R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="info-section">
+            <div class="section-title">Informações Adicionais</div>
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="info-card-title">Vendedor</div>
+                    <div class="info-card-value" id="seller-name">...</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-title">Email Vendedor</div>
+                    <div class="info-card-value" id="seller-email">...</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-title">Telefone Vendedor</div>
+                    <div class="info-card-value" id="seller-phone">...</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-title">ID Proposta</div>
+                    <div class="info-card-value" id="proposal-full-id">...</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-title">Data Criação</div>
+                    <div class="info-card-value" id="creation-date">...</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-title">Status</div>
+                    <div class="info-card-value" id="proposal-status-text">...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="terms-section">
+            <div class="terms-title">Condições Gerais e Termos Importantes</div>
+            <div class="terms-content">
+                <ul class="terms-list">
+                    <li><strong>Validade:</strong> Proposta válida por 5 dias úteis, sujeita a confirmação de estoque na data de aprovação</li>
+                    <li><strong>Formas de Pagamento:</strong> Transferência bancária (Itaú 0341, Ag 0074, CC 99729-7), PIX (CNPJ 35.028.609/0001-53), boleto ou cartão de crédito</li>
+                    <li><strong>Prazo de Entrega:</strong> Frete e prazo sujeitos a alterações conforme disponibilidade de estoque</li>
+                    <li><strong>Garantia Legal:</strong> 90 dias corridos conforme CDC (Art. 26, inciso II) a partir da emissão da NF</li>
+                    <li><strong>Trocas/Devoluções:</strong> Não aceitamos trocas por erro de informações na solicitação</li>
+                    <li><strong>Instalação:</strong> A proposta não contempla instalação das peças</li>
+                    <li><strong>Confirmação:</strong> É fundamental confirmar com o vendedor antes do envio da ordem de compra</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <strong>CHILLER PEÇAS - Especialistas em Refrigeração Industrial e Comercial</strong><br>
+                Atendemos todo o Brasil com peças de qualidade e entregas rápidas
+                
+                <div class="footer-highlight">
+                    <strong>📞 Central:</strong> (11) 2918-8119<br>
+                    <strong>📧 Email:</strong> contato@chillerpecas.com.br<br>
+                    <strong>🌐 Site:</strong> www.chillerpecas.com.br
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Decode JWT token
+        function decodeToken(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error('Error decoding token:', e);
+                return null;
+            }
+        }
+
+        // Format currency
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value || 0);
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        // Format datetime
+        function formatDateTime(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR') + ' às ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Format phone
+        function formatPhone(phone) {
+            if (!phone) return 'N/A';
+            // Remove non-numeric characters
+            phone = phone.replace(/\D/g, '');
+            // Format Brazilian phone
+            if (phone.length === 11) {
+                return `(${phone.substring(0, 2)}) ${phone.substring(2, 7)}-${phone.substring(7)}`;
+            } else if (phone.length === 10) {
+                return `(${phone.substring(0, 2)}) ${phone.substring(2, 6)}-${phone.substring(6)}`;
+            }
+            return phone;
+        }
+
+        // Format document (CPF/CNPJ)
+        function formatDocument(doc) {
+            if (!doc) return 'N/A';
+            doc = doc.replace(/\D/g, '');
+            if (doc.length === 11) {
+                // CPF
+                return doc.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            } else if (doc.length === 14) {
+                // CNPJ
+                return doc.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+            }
+            return doc;
+        }
+
+        // Translate status
+        function translateStatus(status) {
+            const statusMap = {
+                'pending': 'Pendente',
+                'approved': 'Aprovada',
+                'rejected': 'Rejeitada',
+                'in_attendance': 'Em Atendimento',
+                'lead': 'Lead',
+                'customer': 'Cliente',
+                'prospect': 'Prospecto'
+            };
+            return statusMap[status] || status || 'N/A';
+        }
+
+        // Load proposal data
+        async function loadProposal() {
+            try {
+                // Get token from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const token = urlParams.get('token');
+
+                if (!token) {
+                    throw new Error('Token não encontrado na URL');
+                }
+
+                // Decode token to get proposal ID
+                const tokenData = decodeToken(token);
+                if (!tokenData || !tokenData.id) {
+                    throw new Error('Token inválido');
+                }
+
+                // Fetch proposal data from Hablla API
+                const response = await fetch(`https://api.hablla.com/quotation/${tokenData.id}?token=${token}`);
+                
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar dados da proposta');
+                }
+
+                const data = await response.json();
+                console.log('Proposal data:', data);
+
+                // Populate the template
+                populateTemplate(data);
+
+                // Hide loading, show container
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('proposal-container').classList.add('visible');
+
+            } catch (error) {
+                console.error('Error loading proposal:', error);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('error').classList.add('visible');
+            }
+        }
+
+        // Populate template with data
+        function populateTemplate(data) {
+            // Header
+            document.getElementById('proposal-id').textContent = `#${data.id || ''}`;
+            document.getElementById('proposal-date').textContent = formatDateTime(data.created_at);
+            
+            const statusBadge = document.getElementById('proposal-status');
+            statusBadge.textContent = translateStatus(data.status);
+            if (data.status === 'pending') {
+                statusBadge.classList.add('pending');
+            }
+
+            // Client
+            document.getElementById('client-name').textContent = data.name || 'N/A';
+            document.getElementById('client-document').textContent = formatDocument(data.persons?.[0]?.ssn);
+            document.getElementById('client-phone').textContent = formatPhone(data.persons?.[0]?.phones?.[0]?.phone);
+            document.getElementById('client-status').textContent = translateStatus(data.persons?.[0]?.customer_status);
+            document.getElementById('contact-name').textContent = data.persons?.[0]?.name || 'N/A';
+            document.getElementById('client-whatsapp').textContent = data.persons?.[0]?.phones?.[0]?.is_whatsapp ? 'Sim' : 'Não';
+
+            // Products
+            const productsTable = document.getElementById('products-table');
+            productsTable.innerHTML = '';
+
+            if (data.products && data.products.length > 0) {
+                data.products.forEach(product => {
+                    const row = document.createElement('tr');
+                    const total = (product.price || 0) * (product.quantity || 1);
+                    row.innerHTML = `
+                        <td>
+                            <div class="product-code">${product.sku || product.code || 'N/A'}</div>
+                        </td>
+                        <td>
+                            <div class="product-description">${product.name || 'N/A'}</div>
+                            ${product.description ? `<div style="font-size: 11px; color: #6c757d; margin-top: 3px;">${product.description}</div>` : ''}
+                        </td>
+                        <td style="text-align: center;">${product.quantity || 0}</td>
+                        <td style="text-align: right;">${formatCurrency(product.price)}</td>
+                        <td style="text-align: right;">${product.discount_percent || 0}%</td>
+                        <td style="text-align: right;"><strong>${formatCurrency(total)}</strong></td>
+                    `;
+                    productsTable.appendChild(row);
+                });
+            } else {
+                productsTable.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">Nenhum produto encontrado</td></tr>';
+            }
+
+            // Payment
+            document.getElementById('payment-condition').textContent = data.payment_interval?.description || 'N/A';
+            document.getElementById('payment-code').textContent = data.payment_interval?.code || 'N/A';
+            document.getElementById('prediction-date').textContent = formatDate(data.prediction_date);
+
+            // Totals
+            document.getElementById('total-discount').textContent = `- ${formatCurrency(data.discount_value)}`;
+            document.getElementById('total-shipping').textContent = formatCurrency(data.shipping_value);
+            document.getElementById('total-taxes').textContent = formatCurrency(data.taxes_value);
+            document.getElementById('total-value').textContent = formatCurrency(data.value);
+
+            // Additional Info
+            document.getElementById('seller-name').textContent = data.user?.name || 'N/A';
+            document.getElementById('seller-email').textContent = data.user?.email || 'N/A';
+            document.getElementById('seller-phone').textContent = formatPhone(data.user?.phone);
+            document.getElementById('proposal-full-id').textContent = data.id || 'N/A';
+            document.getElementById('creation-date').textContent = formatDate(data.created_at);
+            document.getElementById('proposal-status-text').textContent = translateStatus(data.status);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadProposal);
+    </script>
+</body>
+</html>
