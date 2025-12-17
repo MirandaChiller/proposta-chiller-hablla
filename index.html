@@ -11,894 +11,1212 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
 
         /* Loading Screen */
-        #loading {
+        #loadingScreen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
             z-index: 9999;
-            color: white;
-        }
-
-        #loading.hidden {
-            display: none;
         }
 
         .spinner {
+            width: 60px;
+            height: 60px;
             border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
             border-radius: 50%;
-            border-top: 4px solid white;
-            width: 50px;
-            height: 50px;
             animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
+        #loadingScreen p {
+            color: white;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* Error Screen */
+        #errorScreen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+        }
+
+        .error-content {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .error-content h1 {
+            color: var(--danger);
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .error-content p {
+            color: var(--gray-600);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Container Principal */
         .container {
             max-width: 1200px;
-            margin: 20px auto;
+            margin: 0 auto;
             background: white;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
             display: none;
         }
 
-        .container.visible {
-            display: block;
+        /* Header com Formas Geométricas */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 40px 60px;
+            position: relative;
+            overflow: hidden;
+            color: white;
         }
 
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-            color: white;
-            padding: 40px;
+        /* Formas Geométricas Decorativas */
+        .shapes {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100%;
+            opacity: 0.15;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            background: var(--secondary);
+            top: -50px;
+            right: 50px;
+        }
+
+        .shape-2 {
+            width: 100px;
+            height: 100px;
+            background: white;
+            top: 100px;
+            right: 200px;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--secondary);
+            bottom: -30px;
+            right: 100px;
+        }
+
+        .shape-rect {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 12px;
+            top: 50%;
+            right: 300px;
+            transform: rotate(45deg);
         }
 
         .header-content {
+            position: relative;
+            z-index: 1;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
         }
 
-        .company-logo {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .company-info {
-            font-size: 12px;
-            opacity: 0.9;
-            line-height: 1.8;
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .proposal-number {
+        .logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .header-title h1 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header-info {
             text-align: right;
         }
 
-        .proposal-number h1 {
-            font-size: 24px;
+        .proposal-number {
+            font-size: 16px;
+            opacity: 0.9;
             margin-bottom: 5px;
         }
 
-        .proposal-number .number {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .proposal-id {
+            font-size: 28px;
+            font-weight: 700;
         }
 
-        .proposal-date {
-            font-size: 12px;
-            opacity: 0.9;
+        /* Seção Principal - 2 Colunas */
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 0;
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-top: 5px;
-            background: #d4edda;
-            color: #155724;
+        /* Coluna Esquerda */
+        .sidebar {
+            background: var(--gray-50);
+            padding: 40px 30px;
+            border-right: 1px solid var(--gray-200);
         }
 
-        .status-badge.pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        /* Client Section */
+        /* Cliente Info */
         .client-section {
-            padding: 30px 40px;
-            background: #f8f9fa;
-            border-left: 4px solid #0066cc;
+            margin-bottom: 40px;
         }
 
         .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #0066cc;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .section-title::before {
             content: '';
             width: 4px;
-            height: 20px;
-            background: #0066cc;
-            margin-right: 10px;
-            display: inline-block;
-            vertical-align: middle;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 2px;
         }
 
-        .client-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+        .client-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
         }
 
-        .info-item {
+        .client-details {
             display: flex;
             flex-direction: column;
+            gap: 8px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .detail-icon {
+            font-size: 16px;
+            color: var(--primary);
+            margin-top: 2px;
+        }
+
+        /* Proposta Info */
+        .proposal-info {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
         }
 
         .info-label {
-            font-size: 11px;
-            color: #6c757d;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 3px;
+            font-size: 13px;
+            color: var(--gray-600);
+            font-weight: 500;
         }
 
         .info-value {
             font-size: 14px;
-            color: #333;
-            font-weight: 500;
+            color: var(--gray-900);
+            font-weight: 600;
+            text-align: right;
         }
 
-        /* Items Table */
-        .items-section {
-            padding: 30px 40px;
-        }
-
-        .items-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .items-table thead {
-            background: #0066cc;
-            color: white;
-        }
-
-        .items-table th {
-            padding: 12px;
-            text-align: left;
+        /* Badge Status */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .items-table tbody tr {
-            border-bottom: 1px solid #e9ecef;
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
         }
 
-        .items-table tbody tr:hover {
-            background: #f8f9fa;
+        .status-approved {
+            background: #d1fae5;
+            color: #065f46;
         }
 
-        .items-table td {
-            padding: 15px 12px;
-            font-size: 13px;
+        .status-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
         }
 
-        .product-code {
-            color: #0066cc;
-            font-weight: 600;
+        .status-expired {
+            background: #dbeafe;
+            color: #1e40af;
         }
 
-        .product-description {
-            color: #333;
-            line-height: 1.4;
+        /* Pagamento */
+        .payment-section {
+            margin-bottom: 30px;
         }
 
-        /* Totals */
-        .totals-section {
-            padding: 30px 40px;
-            background: #f8f9fa;
-        }
-
-        .totals-grid {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 30px;
-        }
-
-        .payment-info {
+        .payment-methods {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-        }
-
-        .payment-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 15px;
+            border-radius: 12px;
+            padding: 15px;
         }
 
         .payment-item {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
             padding: 8px 0;
-            font-size: 13px;
-        }
-
-        .payment-item .label {
-            color: #6c757d;
-        }
-
-        .payment-item .value {
-            font-weight: 500;
-        }
-
-        .totals-box {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-        }
-
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
             font-size: 14px;
-            border-bottom: 1px solid #f0f0f0;
+            color: var(--gray-700);
         }
 
-        .total-row:last-child {
-            border-bottom: none;
-        }
-
-        .total-row.final {
-            background: #0066cc;
-            color: white;
-            padding: 15px;
-            margin: 10px -20px -20px -20px;
-            border-radius: 0 0 8px 8px;
+        .payment-icon {
+            color: var(--success);
             font-size: 18px;
-            font-weight: bold;
         }
 
-        /* Info Cards */
-        .info-section {
-            padding: 30px 40px;
-        }
-
-        .info-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .info-card {
-            background: #f8f9fa;
+        /* Termos */
+        .terms-section {
+            background: white;
+            border-radius: 12px;
             padding: 20px;
-            border-radius: 8px;
-            border-left: 3px solid #0066cc;
         }
 
-        .info-card-title {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #6c757d;
+        .terms-section p {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.6;
             margin-bottom: 8px;
         }
 
-        .info-card-value {
-            font-size: 15px;
-            font-weight: 600;
-            color: #333;
-            word-break: break-word;
+        /* Coluna Direita */
+        .content-area {
+            padding: 40px 50px;
         }
 
-        /* Terms */
-        .terms-section {
-            padding: 30px 40px;
-            background: #fff9e6;
-            border-top: 2px solid #ffc107;
+        /* Tabela Produtos */
+        .products-section {
+            margin-bottom: 40px;
         }
 
-        .terms-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 15px;
+        .products-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
         }
 
-        .terms-title::before {
-            content: '⚠️';
-            margin-right: 10px;
+        .products-table thead th {
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-600);
+            padding: 12px;
+            background: var(--gray-100);
         }
 
-        .terms-content {
+        .products-table thead th:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .products-table thead th:last-child {
+            border-radius: 0 8px 8px 0;
+            text-align: right;
+        }
+
+        .products-table tbody tr {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #ffe69c;
+            transition: all 0.2s;
         }
 
-        .terms-list {
-            list-style: none;
-            padding: 0;
+        .products-table tbody tr:hover {
+            background: var(--gray-50);
+            transform: translateX(4px);
         }
 
-        .terms-list li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
+        .products-table tbody td {
+            padding: 16px 12px;
+            border-top: 1px solid var(--gray-100);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .products-table tbody td:first-child {
+            border-left: 1px solid var(--gray-100);
+            border-radius: 8px 0 0 8px;
+        }
+
+        .products-table tbody td:last-child {
+            border-right: 1px solid var(--gray-100);
+            border-radius: 0 8px 8px 0;
+            text-align: right;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: var(--gray-900);
+            font-size: 15px;
+        }
+
+        .product-sku {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        .product-description {
             font-size: 13px;
-            line-height: 1.6;
+            color: var(--gray-600);
+            margin-top: 4px;
+            line-height: 1.4;
         }
 
-        .terms-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #0066cc;
-            font-weight: bold;
+        /* Resumo Financeiro */
+        .summary-section {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
         }
 
-        /* Call to Action */
-        .cta-section {
-            padding: 50px 40px;
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 15px;
+        }
+
+        .summary-label {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .summary-divider {
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 20px 0;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Botão Aceitar Proposta */
+        .action-section {
             text-align: center;
+            margin-bottom: 40px;
         }
 
-        .cta-content {
-            max-width: 900px;
+        .accept-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 18px 60px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .accept-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+        }
+
+        .accept-button:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .accept-button.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .button-text {
+            display: inline-block;
+        }
+
+        .button-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
             margin: 0 auto;
         }
 
-        .cta-text-small {
-            color: white;
-            font-size: 16px;
-            margin-bottom: 20px;
-            opacity: 0.95;
-            line-height: 1.6;
-        }
-
-        .cta-text-large {
-            color: white;
-            font-size: 42px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            margin: 0;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            line-height: 1.2;
-        }
-
-        /* Footer */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 30px 40px;
-            text-align: center;
-        }
-
-        .footer-content {
-            font-size: 12px;
-            line-height: 1.8;
-        }
-
-        .footer-highlight {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-        }
-
-        /* Error Message */
-        .error-message {
-            max-width: 600px;
-            margin: 100px auto;
-            padding: 40px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        .accept-button.loading .button-text {
             display: none;
         }
 
-        .error-message.visible {
-            display: block;
+        .accept-button.loading .button-spinner {
+            display: inline-block;
         }
 
-        .error-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
+        .validity-info {
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--gray-600);
         }
 
-        .error-title {
-            font-size: 24px;
-            color: #dc3545;
-            margin-bottom: 10px;
+        /* Assinatura */
+        .signature-section {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 2px solid var(--gray-100);
         }
 
-        .error-text {
-            color: #6c757d;
-            margin-bottom: 20px;
+        .signature-line {
+            width: 300px;
+            height: 2px;
+            background: var(--gray-300);
+            margin: 30px auto 15px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
+        .signature-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 5px;
+        }
+
+        .signature-title {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        /* Footer com Formas Geométricas */
+        .footer {
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+            padding: 40px 60px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 100%;
+            opacity: 0.1;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+
+        .footer-icon {
+            font-size: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsivo */
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                border-right: none;
+                border-bottom: 2px solid var(--gray-200);
+            }
+
             .header-content {
                 flex-direction: column;
+                gap: 20px;
+                text-align: center;
             }
-            .proposal-number {
-                text-align: left;
-                margin-top: 20px;
+
+            .header-info {
+                text-align: center;
             }
-            .client-grid {
-                grid-template-columns: 1fr;
+
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
             }
-            .totals-grid {
-                grid-template-columns: 1fr;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 10px;
             }
-            .info-cards {
-                grid-template-columns: 1fr;
+
+            .header, .sidebar, .content-area, .footer {
+                padding: 20px;
             }
-            .cta-text-large {
+
+            .header-title h1 {
                 font-size: 28px;
             }
-            .cta-text-small {
-                font-size: 14px;
+
+            .proposal-id {
+                font-size: 20px;
+            }
+
+            .products-table {
+                font-size: 13px;
+            }
+
+            .accept-button {
+                width: 100%;
+                padding: 16px;
+                font-size: 16px;
             }
         }
 
         @media print {
             body {
                 background: white;
+                padding: 0;
             }
+
             .container {
                 box-shadow: none;
-                margin: 0;
+                border-radius: 0;
+                max-width: 100%;
             }
-            #loading, .error-message {
-                display: none !important;
+
+            .action-section, .accept-button {
+                display: none;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading">
-        <div style="text-align: center;">
-            <div class="spinner"></div>
-            <p style="margin-top: 20px; font-size: 18px;">Carregando proposta...</p>
-        </div>
-    </div>
 
-    <!-- Error Message -->
-    <div id="error" class="error-message">
-        <div class="error-icon">⚠️</div>
-        <div class="error-title">Erro ao Carregar Proposta</div>
-        <div class="error-text">
-            Não foi possível carregar os dados da proposta.<br>
-            Verifique se o link está correto ou entre em contato com nosso suporte.
-        </div>
-        <p style="color: #6c757d; font-size: 12px; margin-top: 20px;">
-            📞 (11) 2918-8119 | 📧 contato@chillerpecas.com.br
-        </p>
-    </div>
+<!-- Loading Screen -->
+<div id="loadingScreen">
+    <div class="spinner"></div>
+    <p>Carregando proposta...</p>
+</div>
 
-    <!-- Main Container -->
-    <div id="proposal-container" class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-content">
-                <div>
-                    <div class="company-logo">🧊 CHILLER PEÇAS</div>
-                    <div class="company-info">
-                        CHILLER COMÉRCIO DE PEÇAS E ACESSÓRIOS LTDA<br>
-                        www.chillerpecas.com.br | #RE574.706-2017<br>
-                        CNPJ: 35.028.609/0001-53 | IE: 126.847.127.115<br>
-                        Rua Antônio de Barros, 1093 - Tatuapé<br>
-                        São Paulo - SP - CEP: 03401-000<br>
-                        Tel: (11) 2918-8119
-                    </div>
+<!-- Error Screen -->
+<div id="errorScreen">
+    <div class="error-content">
+        <h1>⚠️</h1>
+        <h2>Erro ao Carregar Proposta</h2>
+        <p id="errorMessage"></p>
+    </div>
+</div>
+
+<!-- Container Principal -->
+<div class="container" id="proposalContainer">
+    
+    <!-- Header -->
+    <header class="header">
+        <!-- Formas Decorativas -->
+        <div class="shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape-rect"></div>
+        </div>
+
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <img id="companyLogo" src="" alt="Logo">
                 </div>
-                <div class="proposal-number">
-                    <h1>Proposta Comercial</h1>
-                    <div class="number" id="proposal-id">#...</div>
-                    <div class="proposal-date">
-                        Gerada em: <span id="proposal-date">...</span><br>
-                        Validade: 5 dias úteis
-                        <div class="status-badge" id="proposal-status">Carregando...</div>
-                    </div>
+                <div class="header-title">
+                    <h1>PROPOSTA</h1>
                 </div>
             </div>
-        </div>
-
-        <!-- Client Information -->
-        <div class="client-section">
-            <div class="section-title">Informações do Cliente</div>
-            <div class="client-grid">
-                <div class="info-item">
-                    <div class="info-label">Nome / Razão Social</div>
-                    <div class="info-value" id="client-name">...</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">CPF / CNPJ</div>
-                    <div class="info-value" id="client-document">...</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Telefone</div>
-                    <div class="info-value" id="client-phone">...</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Status</div>
-                    <div class="info-value" id="client-status">...</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Contato</div>
-                    <div class="info-value" id="contact-name">...</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">WhatsApp</div>
-                    <div class="info-value" id="client-whatsapp">...</div>
-                </div>
+            <div class="header-info">
+                <div class="proposal-number">Proposta Nº</div>
+                <div class="proposal-id" id="proposalNumber">-</div>
             </div>
         </div>
+    </header>
 
-        <!-- Items -->
-        <div class="items-section">
-            <div class="section-title">Itens da Proposta</div>
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+        
+        <!-- Sidebar Esquerda -->
+        <aside class="sidebar">
             
-            <table class="items-table">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Descrição</th>
-                        <th style="text-align: center;">Qtd</th>
-                        <th style="text-align: right;">Valor Unit.</th>
-                        <th style="text-align: right;">Desconto</th>
-                        <th style="text-align: right;">Valor Total</th>
-                    </tr>
-                </thead>
-                <tbody id="products-table">
-                    <!-- Products will be inserted here -->
-                </tbody>
-            </table>
-        </div>
+            <!-- Cliente -->
+            <section class="client-section">
+                <h3 class="section-title">Proposta Para</h3>
+                <div class="client-name" id="clientName">-</div>
+                <div class="client-details">
+                    <div class="detail-item" id="clientAddressContainer" style="display: none;">
+                        <span class="detail-icon">📍</span>
+                        <span id="clientAddress">-</span>
+                    </div>
+                    <div class="detail-item" id="clientPhoneContainer" style="display: none;">
+                        <span class="detail-icon">📞</span>
+                        <span id="clientPhone">-</span>
+                    </div>
+                    <div class="detail-item" id="clientEmailContainer" style="display: none;">
+                        <span class="detail-icon">📧</span>
+                        <span id="clientEmail">-</span>
+                    </div>
+                    <div class="detail-item" id="clientDocumentContainer" style="display: none;">
+                        <span class="detail-icon">🆔</span>
+                        <span id="clientDocument">-</span>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Totals -->
-        <div class="totals-section">
-            <div class="totals-grid">
-                <div class="payment-info">
-                    <div class="payment-title">Condições de Pagamento</div>
+            <!-- Info Proposta -->
+            <section class="proposal-info">
+                <div class="info-row">
+                    <span class="info-label">Data</span>
+                    <span class="info-value" id="proposalDate">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Válida até</span>
+                    <span class="info-value" id="proposalValidity">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Status</span>
+                    <span class="info-value">
+                        <span id="proposalStatus" class="status-badge status-pending">Pendente</span>
+                    </span>
+                </div>
+            </section>
+
+            <!-- Pagamento -->
+            <section class="payment-section">
+                <h3 class="section-title">Pagamento</h3>
+                <div class="payment-methods">
                     <div class="payment-item">
-                        <span class="label">Condição:</span>
-                        <span class="value" id="payment-condition">...</span>
-                    </div>
-                    <div class="payment-item">
-                        <span class="label">Código:</span>
-                        <span class="value" id="payment-code">...</span>
-                    </div>
-                    <div class="payment-item">
-                        <span class="label">Data Prevista:</span>
-                        <span class="value" id="prediction-date">...</span>
+                        <span class="payment-icon">💳</span>
+                        <span id="paymentMethod">À vista</span>
                     </div>
                 </div>
+            </section>
 
-                <div class="totals-box">
-                    <div class="total-row">
-                        <span>Desconto:</span>
-                        <span style="color: #28a745;" id="total-discount">- R$ 0,00</span>
-                    </div>
-                    <div class="total-row">
-                        <span>Frete:</span>
-                        <span id="total-shipping">R$ 0,00</span>
-                    </div>
-                    <div class="total-row">
-                        <span>Impostos:</span>
-                        <span id="total-taxes">R$ 0,00</span>
-                    </div>
-                    <div class="total-row final">
-                        <span>VALOR TOTAL:</span>
-                        <span id="total-value">R$ 0,00</span>
-                    </div>
+            <!-- Termos -->
+            <section class="terms-section">
+                <h3 class="section-title">Termos & Condições</h3>
+                <p id="termsText">Proposta válida conforme data de vencimento. Valores e condições sujeitos a alteração sem aviso prévio.</p>
+            </section>
+
+        </aside>
+
+        <!-- Área de Conteúdo -->
+        <main class="content-area">
+            
+            <!-- Produtos -->
+            <section class="products-section">
+                <h3 class="section-title">Produtos & Serviços</h3>
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th style="text-align: center;">Qtd</th>
+                            <th style="text-align: right;">Preço Unit.</th>
+                            <th style="text-align: right;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Produtos serão inseridos aqui -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Resumo Financeiro -->
+            <section class="summary-section">
+                <div class="summary-row">
+                    <span class="summary-label">Subtotal</span>
+                    <span class="summary-value" id="summarySubtotal">R$ 0,00</span>
                 </div>
-            </div>
+                <div class="summary-row" id="discountRow" style="display: none;">
+                    <span class="summary-label">Desconto</span>
+                    <span class="summary-value" id="summaryDiscount">R$ 0,00</span>
+                </div>
+                <div class="summary-row" id="shippingRow" style="display: none;">
+                    <span class="summary-label">Frete</span>
+                    <span class="summary-value" id="summaryShipping">R$ 0,00</span>
+                </div>
+                <div class="summary-row" id="taxesRow" style="display: none;">
+                    <span class="summary-label">Impostos</span>
+                    <span class="summary-value" id="summaryTaxes">R$ 0,00</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-total">
+                    <span>Total</span>
+                    <span id="summaryTotal">R$ 0,00</span>
+                </div>
+            </section>
+
+            <!-- Botão Aceitar -->
+            <section class="action-section" id="actionSection">
+                <button class="accept-button" id="acceptButton" disabled>
+                    <span class="button-text">✓ Aceitar Proposta</span>
+                    <div class="button-spinner"></div>
+                </button>
+                <div class="validity-info">
+                    Válida até: <strong id="validityDateButton">-</strong>
+                </div>
+            </section>
+
+            <!-- Assinatura -->
+            <section class="signature-section">
+                <div class="signature-line"></div>
+                <div class="signature-name" id="sellerName">-</div>
+                <div class="signature-title" id="sellerTitle">Representante Comercial</div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Formas Decorativas -->
+        <div class="footer-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape-rect"></div>
         </div>
 
-        <!-- Additional Information -->
-        <div class="info-section">
-            <div class="section-title">Informações Adicionais</div>
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="info-card-title">Vendedor</div>
-                    <div class="info-card-value" id="seller-name">...</div>
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-item">
+                    <span class="footer-icon">📞</span>
+                    <span id="companyPhone">-</span>
                 </div>
-                <div class="info-card">
-                    <div class="info-card-title">Email Vendedor</div>
-                    <div class="info-card-value" id="seller-email">...</div>
+                <div class="footer-item">
+                    <span class="footer-icon">📧</span>
+                    <span id="companyEmail">-</span>
                 </div>
-                <div class="info-card">
-                    <div class="info-card-title">Telefone Vendedor</div>
-                    <div class="info-card-value" id="seller-phone">...</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-title">ID Proposta</div>
-                    <div class="info-card-value" id="proposal-full-id">...</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-title">Data Criação</div>
-                    <div class="info-card-value" id="creation-date">...</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-title">Status</div>
-                    <div class="info-card-value" id="proposal-status-text">...</div>
+                <div class="footer-item">
+                    <span class="footer-icon">🌐</span>
+                    <span id="companyWebsite">-</span>
                 </div>
             </div>
-        </div>
-
-        <!-- Terms -->
-        <div class="terms-section">
-            <div class="terms-title">Condições Gerais e Termos Importantes</div>
-            <div class="terms-content">
-                <ul class="terms-list">
-                    <li><strong>Validade:</strong> Proposta válida por 5 dias úteis, sujeita a confirmação de estoque na data de aprovação</li>
-                    <li><strong>Formas de Pagamento:</strong> Transferência bancária (Itaú 0341, Ag 0074, CC 99729-7), PIX (CNPJ 35.028.609/0001-53), boleto ou cartão de crédito</li>
-                    <li><strong>Prazo de Entrega:</strong> Frete e prazo sujeitos a alterações conforme disponibilidade de estoque</li>
-                    <li><strong>Garantia Legal:</strong> 90 dias corridos conforme CDC (Art. 26, inciso II) a partir da emissão da NF</li>
-                    <li><strong>Trocas/Devoluções:</strong> Não aceitamos trocas por erro de informações na solicitação</li>
-                    <li><strong>Instalação:</strong> A proposta não contempla instalação das peças</li>
-                    <li><strong>Confirmação:</strong> É fundamental confirmar com o vendedor antes do envio da ordem de compra</li>
-                </ul>
+            <div class="footer-social" id="socialLinks">
+                <!-- Links sociais serão inseridos aqui -->
             </div>
         </div>
+    </footer>
 
-        <!-- Call to Action -->
-        <div class="cta-section">
-            <div class="cta-content">
-                <p class="cta-text-small">Está pronto para economizar? Venha negociar com a gente e garanta a melhor oferta, nos melhores produtos.</p>
-                <h2 class="cta-text-large">AQUI NÃO PERDEMOS ORÇAMENTO!</h2>
-            </div>
-        </div>
+</div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-content">
-                <strong>CHILLER PEÇAS - Especialistas em Refrigeração Industrial e Comercial</strong><br>
-                Atendemos todo o Brasil com peças de qualidade e entregas rápidas
+<script>
+    // Decodificar token JWT
+    function decodeToken(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        } catch (error) {
+            console.error('Erro ao decodificar token:', error);
+            return null;
+        }
+    }
+
+    // Formatadores
+    function formatCurrency(value) {
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(value || 0);
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR');
+    }
+
+    function formatPhone(phone) {
+        if (!phone) return '-';
+        phone = phone.replace(/\D/g, '');
+        if (phone.length === 11) {
+            return `(${phone.substr(2, 2)}) ${phone.substr(4, 5)}-${phone.substr(9)}`;
+        } else if (phone.length === 13) {
+            return `+${phone.substr(0, 2)} (${phone.substr(2, 2)}) ${phone.substr(4, 5)}-${phone.substr(9)}`;
+        }
+        return phone;
+    }
+
+    function formatDocument(ssn) {
+        if (!ssn) return '-';
+        ssn = ssn.replace(/\D/g, '');
+        if (ssn.length === 11) {
+            return `${ssn.substr(0, 3)}.${ssn.substr(3, 3)}.${ssn.substr(6, 3)}-${ssn.substr(9, 2)}`;
+        } else if (ssn.length === 14) {
+            return `${ssn.substr(0, 2)}.${ssn.substr(2, 3)}.${ssn.substr(5, 3)}/${ssn.substr(8, 4)}-${ssn.substr(12, 2)}`;
+        }
+        return ssn;
+    }
+
+    function translateStatus(status) {
+        const statuses = {
+            'pending': { text: 'Pendente', class: 'status-pending' },
+            'approved': { text: 'Aprovada', class: 'status-approved' },
+            'cancelled': { text: 'Cancelada', class: 'status-cancelled' },
+            'expired': { text: 'Expirada', class: 'status-expired' }
+        };
+        return statuses[status] || { text: status, class: 'status-pending' };
+    }
+
+    // Carregar proposta
+    async function loadProposal() {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+
+            if (!token) {
+                throw new Error('Token não fornecido na URL');
+            }
+
+            // Buscar dados da proposta
+            const response = await fetch(`https://api.hablla.com/v1/quotation?token=${token}`);
+            
+            if (!response.ok) {
+                throw new Error(`Erro ao carregar proposta: ${response.status}`);
+            }
+
+            const data = await response.json();
+            
+            // Popular template
+            populateTemplate(data);
+
+            // Esconder loading e mostrar conteúdo
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('proposalContainer').style.display = 'block';
+
+        } catch (error) {
+            console.error('Erro:', error);
+            showError(error.message);
+        }
+    }
+
+    function populateTemplate(data) {
+        // Logo e empresa
+        if (data.workspace?.photo_url) {
+            document.getElementById('companyLogo').src = data.workspace.photo_url;
+        }
+
+        // Número proposta
+        document.getElementById('proposalNumber').textContent = `#${data.id?.substr(-8) || '-'}`;
+
+        // Cliente
+        const client = data.persons?.[0];
+        if (client) {
+            document.getElementById('clientName').textContent = client.name || 'Cliente';
+            
+            // Telefone
+            if (client.phones?.[0]?.phone) {
+                document.getElementById('clientPhone').textContent = formatPhone(client.phones[0].phone);
+                document.getElementById('clientPhoneContainer').style.display = 'flex';
+            }
+
+            // Email
+            if (client.emails?.[0]?.email) {
+                document.getElementById('clientEmail').textContent = client.emails[0].email;
+                document.getElementById('clientEmailContainer').style.display = 'flex';
+            }
+
+            // Documento
+            if (client.ssn) {
+                document.getElementById('clientDocument').textContent = formatDocument(client.ssn);
+                document.getElementById('clientDocumentContainer').style.display = 'flex';
+            }
+        }
+
+        // Datas
+        document.getElementById('proposalDate').textContent = formatDate(data.created_at);
+        document.getElementById('proposalValidity').textContent = formatDate(data.end_date);
+        document.getElementById('validityDateButton').textContent = formatDate(data.end_date);
+
+        // Status
+        const statusInfo = translateStatus(data.status);
+        const statusBadge = document.getElementById('proposalStatus');
+        statusBadge.textContent = statusInfo.text;
+        statusBadge.className = `status-badge ${statusInfo.class}`;
+
+        // Pagamento
+        if (data.payment_interval?.description) {
+            document.getElementById('paymentMethod').textContent = data.payment_interval.description;
+        }
+
+        // Produtos
+        const tbody = document.getElementById('productsTableBody');
+        tbody.innerHTML = '';
+
+        if (data.products && data.products.length > 0) {
+            data.products.forEach(product => {
+                const row = document.createElement('tr');
+                const total = (product.price || 0) * (product.quantity || 0);
                 
-                <div class="footer-highlight">
-                    <strong>📞 Central:</strong> (11) 2918-8119<br>
-                    <strong>📧 Email:</strong> contato@chillerpecas.com.br<br>
-                    <strong>🌐 Site:</strong> www.chillerpecas.com.br
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Decode JWT token
-        function decodeToken(token) {
-            try {
-                const base64Url = token.split('.')[1];
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-                return JSON.parse(jsonPayload);
-            } catch (e) {
-                console.error('Error decoding token:', e);
-                return null;
-            }
+                row.innerHTML = `
+                    <td>
+                        <div class="product-name">${product.name || 'Produto'}</div>
+                        ${product.sku ? `<div class="product-sku">SKU: ${product.sku}</div>` : ''}
+                        ${product.description ? `<div class="product-description">${product.description}</div>` : ''}
+                    </td>
+                    <td style="text-align: center;">${product.quantity || 0}</td>
+                    <td style="text-align: right;">${formatCurrency(product.price)}</td>
+                    <td style="text-align: right;"><strong>${formatCurrency(total)}</strong></td>
+                `;
+                tbody.appendChild(row);
+            });
         }
 
-        // Format currency
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(value || 0);
+        // Resumo financeiro
+        const subtotal = data.value || 0;
+        const discount = (data.discount_value || 0) + (data.additional_discount_value || 0);
+        const shipping = data.shipping_value || 0;
+        const taxes = data.taxes_value || 0;
+        const total = subtotal - discount + shipping + taxes;
+
+        document.getElementById('summarySubtotal').textContent = formatCurrency(subtotal);
+        document.getElementById('summaryTotal').textContent = formatCurrency(total);
+
+        if (discount > 0) {
+            document.getElementById('summaryDiscount').textContent = `- ${formatCurrency(discount)}`;
+            document.getElementById('discountRow').style.display = 'flex';
         }
 
-        // Format date
-        function formatDate(dateString) {
-            if (!dateString) return 'N/A';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('pt-BR');
+        if (shipping > 0) {
+            document.getElementById('summaryShipping').textContent = formatCurrency(shipping);
+            document.getElementById('shippingRow').style.display = 'flex';
         }
 
-        // Format datetime
-        function formatDateTime(dateString) {
-            if (!dateString) return 'N/A';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('pt-BR') + ' às ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        if (taxes > 0) {
+            document.getElementById('summaryTaxes').textContent = formatCurrency(taxes);
+            document.getElementById('taxesRow').style.display = 'flex';
         }
 
-        // Format phone
-        function formatPhone(phone) {
-            if (!phone) return 'N/A';
-            // Remove non-numeric characters
-            phone = phone.replace(/\D/g, '');
-            // Format Brazilian phone
-            if (phone.length === 11) {
-                return `(${phone.substring(0, 2)}) ${phone.substring(2, 7)}-${phone.substring(7)}`;
-            } else if (phone.length === 10) {
-                return `(${phone.substring(0, 2)}) ${phone.substring(2, 6)}-${phone.substring(6)}`;
-            }
-            return phone;
+        // Vendedor
+        if (data.user) {
+            document.getElementById('sellerName').textContent = data.user.name || '-';
         }
 
-        // Format document (CPF/CNPJ)
-        function formatDocument(doc) {
-            if (!doc) return 'N/A';
-            doc = doc.replace(/\D/g, '');
-            if (doc.length === 11) {
-                // CPF
-                return doc.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-            } else if (doc.length === 14) {
-                // CNPJ
-                return doc.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
-            }
-            return doc;
+        // Footer
+        if (data.user?.phone) {
+            document.getElementById('companyPhone').textContent = formatPhone(data.user.phone);
+        }
+        if (data.user?.email) {
+            document.getElementById('companyEmail').textContent = data.user.email;
         }
 
-        // Translate status
-        function translateStatus(status) {
-            const statusMap = {
-                'pending': 'Pendente',
-                'approved': 'Aprovada',
-                'rejected': 'Rejeitada',
-                'in_attendance': 'Em Atendimento',
-                'lead': 'Lead',
-                'customer': 'Cliente',
-                'prospect': 'Prospecto'
-            };
-            return statusMap[status] || status || 'N/A';
+        // Social Links
+        if (data.workspace?.urls && data.workspace.urls.length > 0) {
+            const socialContainer = document.getElementById('socialLinks');
+            data.workspace.urls.forEach(url => {
+                const link = document.createElement('a');
+                link.href = url.url;
+                link.target = '_blank';
+                link.className = 'social-link';
+                
+                const icons = {
+                    facebook: '📘',
+                    instagram: '📷',
+                    linkedin: '💼',
+                    youtube: '▶️'
+                };
+                
+                link.textContent = icons[url.type] || '🔗';
+                socialContainer.appendChild(link);
+            });
         }
 
-        // Load proposal data
-        async function loadProposal() {
-            try {
-                // Get token from URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const token = urlParams.get('token');
-
-                if (!token) {
-                    throw new Error('Token não encontrado na URL');
-                }
-
-                // Decode token to verify
-                const tokenData = decodeToken(token);
-                console.log('Token decoded:', tokenData);
-
-                if (!tokenData || !tokenData.id) {
-                    throw new Error('Token inválido');
-                }
-
-                // Fetch data directly from Hablla unprotected endpoint
-                console.log('Fetching proposal data from Hablla...');
-                const response = await fetch(`https://api.hablla.com/v1/quotation?token=${token}`);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                console.log('Proposal data received:', data);
-
-                // Populate the template
-                populateTemplate(data);
-
-                // Hide loading, show container
-                document.getElementById('loading').classList.add('hidden');
-                document.getElementById('proposal-container').classList.add('visible');
-
-            } catch (error) {
-                console.error('Error loading proposal:', error);
-                document.getElementById('loading').classList.add('hidden');
-                document.getElementById('error').classList.add('visible');
-            }
+        // Botão de aceitar (preparado mas desabilitado)
+        const acceptButton = document.getElementById('acceptButton');
+        
+        // Se já aprovada, esconde botão
+        if (data.status === 'approved') {
+            document.getElementById('actionSection').style.display = 'none';
+        } else {
+            // Botão habilitado mas sem ação ainda
+            acceptButton.disabled = true;
+            acceptButton.title = 'Funcionalidade em breve';
         }
+    }
 
-        // Populate template with data
-        function populateTemplate(data) {
-            // Header
-            document.getElementById('proposal-id').textContent = `#${data.id || ''}`;
-            document.getElementById('proposal-date').textContent = formatDateTime(data.created_at);
-            
-            const statusBadge = document.getElementById('proposal-status');
-            statusBadge.textContent = translateStatus(data.status);
-            if (data.status === 'pending') {
-                statusBadge.classList.add('pending');
-            }
+    function showError(message) {
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('errorMessage').textContent = message;
+        document.getElementById('errorScreen').style.display = 'flex';
+    }
 
-            // Client
-            document.getElementById('client-name').textContent = data.name || 'N/A';
-            document.getElementById('client-document').textContent = formatDocument(data.persons?.[0]?.ssn);
-            document.getElementById('client-phone').textContent = formatPhone(data.persons?.[0]?.phones?.[0]?.phone);
-            document.getElementById('client-status').textContent = translateStatus(data.persons?.[0]?.customer_status);
-            document.getElementById('contact-name').textContent = data.persons?.[0]?.name || 'N/A';
-            document.getElementById('client-whatsapp').textContent = data.persons?.[0]?.phones?.[0]?.is_whatsapp ? 'Sim' : 'Não';
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', loadProposal);
+</script>
 
-            // Products
-            const productsTable = document.getElementById('products-table');
-            productsTable.innerHTML = '';
-
-            if (data.products && data.products.length > 0) {
-                data.products.forEach(product => {
-                    const row = document.createElement('tr');
-                    const total = (product.price || 0) * (product.quantity || 1);
-                    row.innerHTML = `
-                        <td>
-                            <div class="product-code">${product.sku || product.code || 'N/A'}</div>
-                        </td>
-                        <td>
-                            <div class="product-description">${product.name || 'N/A'}</div>
-                            ${product.description ? `<div style="font-size: 11px; color: #6c757d; margin-top: 3px;">${product.description}</div>` : ''}
-                        </td>
-                        <td style="text-align: center;">${product.quantity || 0}</td>
-                        <td style="text-align: right;">${formatCurrency(product.price)}</td>
-                        <td style="text-align: right;">${product.discount_percent || 0}%</td>
-                        <td style="text-align: right;"><strong>${formatCurrency(total)}</strong></td>
-                    `;
-                    productsTable.appendChild(row);
-                });
-            } else {
-                productsTable.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">Nenhum produto encontrado</td></tr>';
-            }
-
-            // Payment
-            document.getElementById('payment-condition').textContent = data.payment_interval?.description || 'N/A';
-            document.getElementById('payment-code').textContent = data.payment_interval?.code || 'N/A';
-            document.getElementById('prediction-date').textContent = formatDate(data.prediction_date);
-
-            // Totals
-            document.getElementById('total-discount').textContent = `- ${formatCurrency(data.discount_value)}`;
-            document.getElementById('total-shipping').textContent = formatCurrency(data.shipping_value);
-            document.getElementById('total-taxes').textContent = formatCurrency(data.taxes_value);
-            document.getElementById('total-value').textContent = formatCurrency(data.value);
-
-            // Additional Info
-            document.getElementById('seller-name').textContent = data.user?.name || 'N/A';
-            document.getElementById('seller-email').textContent = data.user?.email || 'N/A';
-            document.getElementById('seller-phone').textContent = formatPhone(data.user?.phone);
-            document.getElementById('proposal-full-id').textContent = data.id || 'N/A';
-            document.getElementById('creation-date').textContent = formatDate(data.created_at);
-            document.getElementById('proposal-status-text').textContent = translateStatus(data.status);
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', loadProposal);
-    </script>
 </body>
 </html>
