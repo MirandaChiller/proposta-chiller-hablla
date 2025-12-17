@@ -57,46 +57,10 @@
             background: white;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
             display: none;
-            position: relative;
         }
 
         .container.visible {
             display: block;
-        }
-
-        /* Botão Download PDF */
-        .download-pdf-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        .download-pdf-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-        }
-
-        .download-pdf-btn:active {
-            transform: translateY(0);
-        }
-
-        .download-pdf-btn svg {
-            width: 18px;
-            height: 18px;
         }
 
         /* Header */
@@ -524,7 +488,7 @@
                 box-shadow: none;
                 margin: 0;
             }
-            #loading, .error-message, .download-pdf-btn {
+            #loading, .error-message {
                 display: none !important;
             }
         }
@@ -548,20 +512,12 @@
             Verifique se o link está correto ou entre em contato com nosso suporte.
         </div>
         <p style="color: #6c757d; font-size: 12px; margin-top: 20px;">
-            📞 (11) 2918-8119 | 📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="563539382237223916353e3f3a3a332426333537257835393b783424">[email&#160;protected]</a>
+            📞 (11) 2918-8119 | 📧 contato@chillerpecas.com.br
         </p>
     </div>
 
     <!-- Main Container -->
     <div id="proposal-container" class="container">
-        <!-- Botão Download PDF -->
-        <button class="download-pdf-btn" onclick="downloadPDF()" title="Baixar proposta como PDF">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-            Baixar PDF
-        </button>
-
         <!-- Header -->
         <div class="header">
             <div class="header-content">
@@ -743,14 +699,14 @@
                 
                 <div class="footer-highlight">
                     <strong>📞 Central:</strong> (11) 2918-8119<br>
-                    <strong>📧 Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="90f3fffee4f1e4ffd0f3f8f9fcfcf5e2e0f5f3f1e3bef3fffdbef2e2">[email&#160;protected]</a><br>
+                    <strong>📧 Email:</strong> contato@chillerpecas.com.br<br>
                     <strong>🌐 Site:</strong> www.chillerpecas.com.br
                 </div>
             </div>
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Decode JWT token
         function decodeToken(token) {
             try {
@@ -764,12 +720,6 @@
                 console.error('Error decoding token:', e);
                 return null;
             }
-        }
-
-        // Download PDF function
-        function downloadPDF() {
-            // Trigger browser's print dialog which allows saving as PDF
-            window.print();
         }
 
         // Format currency
@@ -942,4 +892,13 @@
             document.getElementById('seller-name').textContent = data.user?.name || 'N/A';
             document.getElementById('seller-email').textContent = data.user?.email || 'N/A';
             document.getElementById('seller-phone').textContent = formatPhone(data.user?.phone);
-            document.getElementById('proposal-full-i
+            document.getElementById('proposal-full-id').textContent = data.id || 'N/A';
+            document.getElementById('creation-date').textContent = formatDate(data.created_at);
+            document.getElementById('proposal-status-text').textContent = translateStatus(data.status);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadProposal);
+    </script>
+</body>
+</html>
