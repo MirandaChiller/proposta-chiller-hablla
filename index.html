@@ -480,6 +480,49 @@
             }
         }
 
+        /* Botão Salvar PDF */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .print-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+        }
+
+        .print-button:active {
+            transform: translateY(0);
+        }
+
+        .print-icon {
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .print-button {
+                top: 10px;
+                right: 10px;
+                padding: 10px 18px;
+                font-size: 12px;
+            }
+        }
+
         @media print {
             body {
                 background: white;
@@ -488,13 +531,19 @@
                 box-shadow: none;
                 margin: 0;
             }
-            #loading, .error-message {
+            #loading, .error-message, .print-button {
                 display: none !important;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Botão Salvar PDF -->
+    <button class="print-button" onclick="window.print()" title="Salvar como PDF ou Imprimir">
+        <span class="print-icon">🖨️</span>
+        <span>Salvar PDF</span>
+    </button>
+
     <!-- Loading Screen -->
     <div id="loading">
         <div style="text-align: center;">
@@ -512,7 +561,7 @@
             Verifique se o link está correto ou entre em contato com nosso suporte.
         </div>
         <p style="color: #6c757d; font-size: 12px; margin-top: 20px;">
-            📞 (11) 2918-8119 | 📧 contato@chillerpecas.com.br
+            📞 (11) 2918-8119 | 📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4a2925243e2b3e250a29222326262f383a2f292b3964292527642838">[email&#160;protected]</a>
         </p>
     </div>
 
@@ -699,14 +748,14 @@
                 
                 <div class="footer-highlight">
                     <strong>📞 Central:</strong> (11) 2918-8119<br>
-                    <strong>📧 Email:</strong> contato@chillerpecas.com.br<br>
+                    <strong>📧 Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d6b5b9b8a2b7a2b996b5bebfbabab3a4a6b3b5b7a5f8b5b9bbf8b4a4">[email&#160;protected]</a><br>
                     <strong>🌐 Site:</strong> www.chillerpecas.com.br
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Decode JWT token
         function decodeToken(token) {
             try {
