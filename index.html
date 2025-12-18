@@ -52,8 +52,8 @@
         }
 
         .container {
-            max-width: 1200px;
-            margin: 20px auto;
+            max-width: 100%;
+            margin: 0;
             background: white;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
             display: none;
@@ -67,20 +67,21 @@
         .header {
             background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
             color: white;
-            padding: 40px;
+            padding: 30px;
         }
 
         .header-content {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
             align-items: flex-start;
+            gap: 40px;
         }
 
         .company-logo {
             font-size: 32px;
             font-weight: bold;
             margin-bottom: 10px;
-            margin-left: -15px;
+            margin-left: 0;
         }
 
         .company-info {
@@ -91,6 +92,7 @@
 
         .proposal-number {
             text-align: right;
+            margin-right: 0;
         }
 
         .proposal-number h1 {
@@ -128,7 +130,7 @@
 
         /* Client Section */
         .client-section {
-            padding: 30px 40px;
+            padding: 30px;
             background: #f8f9fa;
             border-left: 4px solid #0066cc;
         }
@@ -177,7 +179,7 @@
 
         /* Items Table */
         .items-section {
-            padding: 30px 40px;
+            padding: 30px;
         }
 
         .items-table {
@@ -224,7 +226,7 @@
 
         /* Totals */
         .totals-section {
-            padding: 30px 40px;
+            padding: 30px;
             background: #f8f9fa;
         }
 
@@ -294,7 +296,7 @@
 
         /* Info Cards */
         .info-section {
-            padding: 30px 40px;
+            padding: 30px;
         }
 
         .info-cards {
@@ -327,7 +329,7 @@
 
         /* Terms */
         .terms-section {
-            padding: 30px 40px;
+            padding: 30px;
             background: #fff9e6;
             border-top: 2px solid #ffc107;
         }
@@ -374,7 +376,7 @@
 
         /* Call to Action - Compacto */
         .cta-section {
-            padding: 20px 40px;
+            padding: 20px 30px;
             background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
             text-align: center;
         }
@@ -407,7 +409,7 @@
         .footer {
             background: #2c3e50;
             color: white;
-            padding: 30px 40px;
+            padding: 30px;
             text-align: center;
         }
 
@@ -803,9 +805,16 @@
                 print-color-adjust: exact !important;
             }
             
+            .header-content {
+                display: grid !important;
+                grid-template-columns: 1.5fr 1fr !important;
+                gap: 20px !important;
+            }
+            
             .company-logo {
                 font-size: 18px;
                 margin-bottom: 4px;
+                margin-left: 0 !important;
             }
             
             .company-logo img {
@@ -820,6 +829,10 @@
             .proposal-number h1 {
                 font-size: 12px;
                 margin-bottom: 2px;
+            }
+            
+            .proposal-number {
+                margin-right: 0 !important;
             }
             
             .proposal-number .number {
