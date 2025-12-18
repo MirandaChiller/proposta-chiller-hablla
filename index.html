@@ -848,6 +848,13 @@
             
             .items-section {
                 padding: 8px 15px;
+                overflow: visible !important;
+            }
+            
+            .items-table {
+                width: 100% !important;
+                min-width: auto !important;
+                table-layout: fixed !important;
             }
             
             .totals-section {
@@ -907,22 +914,72 @@
             }
             
             .items-table th {
-                padding: 4px 3px;
-                font-size: 8px;
+                padding: 3px 2px;
+                font-size: 7px;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
             }
             
             .items-table td {
-                padding: 5px 3px;
-                font-size: 9px;
+                padding: 3px 2px;
+                font-size: 8px;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
             }
             
             .product-code {
-                font-size: 9px;
+                font-size: 8px;
             }
             
             .product-description {
-                font-size: 9px;
-                line-height: 1.2;
+                font-size: 8px;
+                line-height: 1.1;
+            }
+            
+            /* Larguras das colunas - 9 colunas */
+            .items-table th:nth-child(1),
+            .items-table td:nth-child(1) {
+                width: 10%;
+            }
+            
+            .items-table th:nth-child(2),
+            .items-table td:nth-child(2) {
+                width: 25%;
+            }
+            
+            .items-table th:nth-child(3),
+            .items-table td:nth-child(3) {
+                width: 6%;
+            }
+            
+            .items-table th:nth-child(4),
+            .items-table td:nth-child(4) {
+                width: 10%;
+            }
+            
+            .items-table th:nth-child(5),
+            .items-table td:nth-child(5) {
+                width: 8%;
+            }
+            
+            .items-table th:nth-child(6),
+            .items-table td:nth-child(6) {
+                width: 9%;
+            }
+            
+            .items-table th:nth-child(7),
+            .items-table td:nth-child(7) {
+                width: 8%;
+            }
+            
+            .items-table th:nth-child(8),
+            .items-table td:nth-child(8) {
+                width: 9%;
+            }
+            
+            .items-table th:nth-child(9),
+            .items-table td:nth-child(9) {
+                width: 15%;
             }
             
             /* Totais compactos */
