@@ -635,7 +635,10 @@
                         <th>Descrição</th>
                         <th style="text-align: center;">Qtd</th>
                         <th style="text-align: right;">Valor Unit.</th>
-                        <th style="text-align: right;">Desconto</th>
+                        <th style="text-align: right;">Desconto (%)</th>
+                        <th style="text-align: right;">Desconto (R$)</th>
+                        <th style="text-align: right;">Impostos (%)</th>
+                        <th style="text-align: right;">Impostos (R$)</th>
                         <th style="text-align: right;">Valor Total</th>
                     </tr>
                 </thead>
@@ -666,6 +669,10 @@
 
                 <div class="totals-box">
                     <div class="total-row">
+                        <span>Recorrente:</span>
+                        <span id="total-recurring">R$ 0,00</span>
+                    </div>
+                    <div class="total-row">
                         <span>Desconto:</span>
                         <span style="color: #28a745;" id="total-discount">- R$ 0,00</span>
                     </div>
@@ -676,6 +683,10 @@
                     <div class="total-row">
                         <span>Impostos:</span>
                         <span id="total-taxes">R$ 0,00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Desconto Adicional:</span>
+                        <span style="color: #28a745;" id="additional-discount">- R$ 0,00</span>
                     </div>
                     <div class="total-row final">
                         <span>VALOR TOTAL:</span>
@@ -907,6 +918,11 @@
                 data.products.forEach(product => {
                     const row = document.createElement('tr');
                     const total = (product.price || 0) * (product.quantity || 1);
+                    const discountPercent = product.discount_percent || 0;
+                    const discountValue = product.discount_value || 0;
+                    const taxesPercent = product.taxes_percent || 0;
+                    const taxesValue = product.taxes_value || 0;
+                    
                     row.innerHTML = `
                         <td>
                             <div class="product-code">${product.sku || product.code || 'N/A'}</div>
@@ -917,13 +933,16 @@
                         </td>
                         <td style="text-align: center;">${product.quantity || 0}</td>
                         <td style="text-align: right;">${formatCurrency(product.price)}</td>
-                        <td style="text-align: right;">${product.discount_percent || 0}%</td>
+                        <td style="text-align: right;">${discountPercent.toFixed(2)}%</td>
+                        <td style="text-align: right; color: #28a745;">- ${formatCurrency(discountValue)}</td>
+                        <td style="text-align: right;">${taxesPercent.toFixed(2)}%</td>
+                        <td style="text-align: right;">${formatCurrency(taxesValue)}</td>
                         <td style="text-align: right;"><strong>${formatCurrency(total)}</strong></td>
                     `;
                     productsTable.appendChild(row);
                 });
             } else {
-                productsTable.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">Nenhum produto encontrado</td></tr>';
+                productsTable.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 20px;">Nenhum produto encontrado</td></tr>';
             }
 
             // Payment
@@ -932,9 +951,11 @@
             document.getElementById('prediction-date').textContent = formatDate(data.prediction_date);
 
             // Totals
+            document.getElementById('total-recurring').textContent = formatCurrency(data.recurring_value);
             document.getElementById('total-discount').textContent = `- ${formatCurrency(data.discount_value)}`;
             document.getElementById('total-shipping').textContent = formatCurrency(data.shipping_value);
             document.getElementById('total-taxes').textContent = formatCurrency(data.taxes_value);
+            document.getElementById('additional-discount').textContent = `- ${formatCurrency(data.additional_discount_value)}`;
             document.getElementById('total-value').textContent = formatCurrency(data.value);
 
             // Additional Info
