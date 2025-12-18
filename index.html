@@ -540,184 +540,192 @@
                 display: none !important;
             }
             
+            /* Ocultar CTA no print para economizar espaço */
+            .cta-section {
+                display: none !important;
+            }
+            
             /* Reduzir espaçamentos globalmente */
             .header {
-                padding: 15px 20px;
+                padding: 8px 15px;
             }
             
             .company-logo {
-                font-size: 20px;
-                margin-bottom: 5px;
-            }
-            
-            .company-info {
-                font-size: 8px;
-                line-height: 1.3;
-            }
-            
-            .proposal-number h1 {
-                font-size: 14px;
+                font-size: 16px;
                 margin-bottom: 3px;
             }
             
+            .company-info {
+                font-size: 6px;
+                line-height: 1.2;
+            }
+            
+            .proposal-number h1 {
+                font-size: 11px;
+                margin-bottom: 2px;
+            }
+            
             .proposal-number .number {
-                font-size: 20px;
-                margin-bottom: 5px;
+                font-size: 16px;
+                margin-bottom: 3px;
             }
             
             .proposal-date {
-                font-size: 8px;
+                font-size: 6px;
             }
             
             .status-badge {
-                padding: 2px 8px;
-                font-size: 7px;
-                margin-top: 3px;
+                padding: 1px 5px;
+                font-size: 6px;
+                margin-top: 2px;
             }
             
-            /* Seções compactas */
-            .client-section,
-            .items-section,
-            .totals-section,
-            .info-section,
-            .terms-section,
-            .cta-section,
+            /* Seções muito compactas */
+            .client-section {
+                padding: 6px 15px;
+            }
+            
+            .items-section {
+                padding: 6px 15px;
+            }
+            
+            .totals-section {
+                padding: 6px 15px;
+            }
+            
+            .info-section {
+                padding: 6px 15px;
+            }
+            
+            .terms-section {
+                padding: 6px 15px;
+            }
+            
             .footer {
-                padding: 10px 20px;
+                padding: 6px 15px;
             }
             
             .section-title {
-                font-size: 12px;
-                margin-bottom: 8px;
+                font-size: 10px;
+                margin-bottom: 4px;
             }
             
             .section-title::before {
-                height: 12px;
-                margin-right: 5px;
+                height: 10px;
+                margin-right: 4px;
             }
             
             /* Client grid compacto */
             .client-grid {
-                gap: 5px;
+                gap: 3px;
+                grid-template-columns: repeat(3, 1fr);
             }
             
             .info-label {
-                font-size: 7px;
+                font-size: 6px;
                 margin-bottom: 1px;
             }
             
             .info-value {
-                font-size: 9px;
-            }
-            
-            /* Tabela compacta */
-            .items-table th {
-                padding: 5px 4px;
                 font-size: 7px;
             }
             
+            /* Tabela muito compacta */
+            .items-table th {
+                padding: 3px 2px;
+                font-size: 6px;
+            }
+            
             .items-table td {
-                padding: 6px 4px;
-                font-size: 8px;
+                padding: 4px 2px;
+                font-size: 7px;
             }
             
             .product-code {
-                font-size: 8px;
+                font-size: 7px;
             }
             
             .product-description {
-                font-size: 8px;
-                line-height: 1.2;
+                font-size: 7px;
+                line-height: 1.1;
             }
             
             /* Totais compactos */
             .totals-grid {
-                gap: 10px;
-                grid-template-columns: 1fr 300px;
+                gap: 8px;
+                grid-template-columns: 1fr 250px;
             }
             
             .payment-info,
             .totals-box {
-                padding: 8px;
+                padding: 5px;
             }
             
             .payment-title {
-                font-size: 9px;
-                margin-bottom: 5px;
-            }
-            
-            .payment-item {
-                padding: 3px 0;
-                font-size: 8px;
-            }
-            
-            .total-row {
-                padding: 4px 0;
-                font-size: 9px;
-            }
-            
-            .total-row.final {
-                padding: 8px;
-                margin: 5px -8px -8px -8px;
-                font-size: 12px;
-            }
-            
-            /* Info cards compactos */
-            .info-cards {
-                gap: 8px;
-            }
-            
-            .info-card {
-                padding: 8px;
-            }
-            
-            .info-card-title {
                 font-size: 7px;
                 margin-bottom: 3px;
             }
             
-            .info-card-value {
-                font-size: 9px;
+            .payment-item {
+                padding: 2px 0;
+                font-size: 7px;
             }
             
-            /* Termos compactos */
-            .terms-title {
+            .total-row {
+                padding: 3px 0;
+                font-size: 7px;
+            }
+            
+            .total-row.final {
+                padding: 5px;
+                margin: 3px -5px -5px -5px;
                 font-size: 10px;
-                margin-bottom: 5px;
+            }
+            
+            /* Info cards muito compactos */
+            .info-cards {
+                gap: 4px;
+            }
+            
+            .info-card {
+                padding: 4px;
+            }
+            
+            .info-card-title {
+                font-size: 6px;
+                margin-bottom: 2px;
+            }
+            
+            .info-card-value {
+                font-size: 7px;
+            }
+            
+            /* Termos muito compactos */
+            .terms-title {
+                font-size: 8px;
+                margin-bottom: 3px;
             }
             
             .terms-content {
-                padding: 8px;
+                padding: 5px;
             }
             
             .terms-list li {
-                padding: 3px 0;
-                padding-left: 15px;
-                font-size: 7px;
-                line-height: 1.3;
+                padding: 1px 0;
+                padding-left: 12px;
+                font-size: 6px;
+                line-height: 1.2;
             }
             
-            /* CTA compacto */
-            .cta-text-small {
-                font-size: 9px;
-                margin-bottom: 5px;
-                line-height: 1.3;
-            }
-            
-            .cta-text-large {
-                font-size: 18px;
-                line-height: 1.1;
-            }
-            
-            /* Footer compacto */
+            /* Footer muito compacto */
             .footer-content {
-                font-size: 7px;
-                line-height: 1.4;
+                font-size: 6px;
+                line-height: 1.3;
             }
             
             .footer-highlight {
-                padding: 5px;
-                margin-top: 5px;
+                padding: 3px;
+                margin-top: 3px;
             }
             
             /* Evitar quebras de página */
@@ -727,15 +735,19 @@
             .totals-section,
             .info-section,
             .terms-section,
-            .cta-section,
             .footer {
                 page-break-inside: avoid;
             }
             
-            /* Forçar tudo em 1 página */
+            /* Forçar tudo em 1 página com margens mínimas */
             @page {
                 size: A4;
-                margin: 10mm;
+                margin: 5mm;
+            }
+            
+            /* Escala geral reduzida */
+            html {
+                zoom: 0.85;
             }
         }
     </style>
