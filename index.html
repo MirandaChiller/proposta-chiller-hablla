@@ -766,6 +766,13 @@
         }
 
         @media print {
+            /* Forçar impressão de cores de fundo */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            
             body {
                 background: white;
                 margin: 0;
@@ -788,9 +795,12 @@
                 display: none !important;
             }
             
-            /* Header compacto mas legível */
+            /* Header compacto mas legível - MANTÉM BACKGROUND AZUL */
             .header {
                 padding: 10px 15px;
+                background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             
             .company-logo {
@@ -830,6 +840,10 @@
             /* Seções balanceadas */
             .client-section {
                 padding: 8px 15px;
+                background: #f8f9fa !important;
+                border-left: 4px solid #0066cc !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             
             .items-section {
@@ -838,14 +852,25 @@
             
             .totals-section {
                 padding: 8px 15px;
+                background: #f8f9fa !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             
             .terms-section {
                 padding: 8px 15px;
+                background: #fff9e6 !important;
+                border-top: 2px solid #ffc107 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             
             .footer {
                 padding: 8px 15px;
+                background: #2c3e50 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             
             .section-title {
@@ -874,6 +899,13 @@
             }
             
             /* Tabela legível */
+            .items-table thead {
+                background: #0066cc !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
             .items-table th {
                 padding: 4px 3px;
                 font-size: 8px;
@@ -923,6 +955,10 @@
                 padding: 6px;
                 margin: 4px -6px -6px -6px;
                 font-size: 11px;
+                background: #0066cc !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             
             /* Termos compactos */
