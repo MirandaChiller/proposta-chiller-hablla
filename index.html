@@ -540,192 +540,171 @@
                 display: none !important;
             }
             
-            /* Ocultar CTA no print para economizar espaço */
-            .cta-section {
+            /* Ocultar CTA e Informações Adicionais no print */
+            .cta-section,
+            .info-section {
                 display: none !important;
             }
             
-            /* Reduzir espaçamentos globalmente */
+            /* Header compacto mas legível */
             .header {
-                padding: 8px 15px;
+                padding: 10px 15px;
             }
             
             .company-logo {
-                font-size: 16px;
-                margin-bottom: 3px;
+                font-size: 18px;
+                margin-bottom: 4px;
             }
             
             .company-info {
-                font-size: 6px;
-                line-height: 1.2;
+                font-size: 7px;
+                line-height: 1.3;
             }
             
             .proposal-number h1 {
-                font-size: 11px;
+                font-size: 12px;
                 margin-bottom: 2px;
             }
             
             .proposal-number .number {
-                font-size: 16px;
-                margin-bottom: 3px;
-            }
-            
-            .proposal-date {
-                font-size: 6px;
-            }
-            
-            .status-badge {
-                padding: 1px 5px;
-                font-size: 6px;
-                margin-top: 2px;
-            }
-            
-            /* Seções muito compactas */
-            .client-section {
-                padding: 6px 15px;
-            }
-            
-            .items-section {
-                padding: 6px 15px;
-            }
-            
-            .totals-section {
-                padding: 6px 15px;
-            }
-            
-            .info-section {
-                padding: 6px 15px;
-            }
-            
-            .terms-section {
-                padding: 6px 15px;
-            }
-            
-            .footer {
-                padding: 6px 15px;
-            }
-            
-            .section-title {
-                font-size: 10px;
+                font-size: 18px;
                 margin-bottom: 4px;
             }
             
+            .proposal-date {
+                font-size: 7px;
+            }
+            
+            .status-badge {
+                padding: 2px 6px;
+                font-size: 7px;
+                margin-top: 2px;
+            }
+            
+            /* Seções balanceadas */
+            .client-section {
+                padding: 8px 15px;
+            }
+            
+            .items-section {
+                padding: 8px 15px;
+            }
+            
+            .totals-section {
+                padding: 8px 15px;
+            }
+            
+            .terms-section {
+                padding: 8px 15px;
+            }
+            
+            .footer {
+                padding: 8px 15px;
+            }
+            
+            .section-title {
+                font-size: 11px;
+                margin-bottom: 5px;
+            }
+            
             .section-title::before {
-                height: 10px;
+                height: 11px;
                 margin-right: 4px;
             }
             
-            /* Client grid compacto */
+            /* Client grid em 3 colunas */
             .client-grid {
-                gap: 3px;
+                gap: 4px;
                 grid-template-columns: repeat(3, 1fr);
             }
             
             .info-label {
-                font-size: 6px;
+                font-size: 7px;
                 margin-bottom: 1px;
             }
             
             .info-value {
-                font-size: 7px;
+                font-size: 9px;
             }
             
-            /* Tabela muito compacta */
+            /* Tabela legível */
             .items-table th {
-                padding: 3px 2px;
-                font-size: 6px;
+                padding: 4px 3px;
+                font-size: 8px;
             }
             
             .items-table td {
-                padding: 4px 2px;
-                font-size: 7px;
+                padding: 5px 3px;
+                font-size: 9px;
             }
             
             .product-code {
-                font-size: 7px;
+                font-size: 9px;
             }
             
             .product-description {
-                font-size: 7px;
-                line-height: 1.1;
+                font-size: 9px;
+                line-height: 1.2;
             }
             
             /* Totais compactos */
             .totals-grid {
-                gap: 8px;
-                grid-template-columns: 1fr 250px;
+                gap: 10px;
+                grid-template-columns: 1fr 280px;
             }
             
             .payment-info,
             .totals-box {
-                padding: 5px;
+                padding: 6px;
             }
             
             .payment-title {
-                font-size: 7px;
-                margin-bottom: 3px;
+                font-size: 9px;
+                margin-bottom: 4px;
             }
             
             .payment-item {
                 padding: 2px 0;
-                font-size: 7px;
+                font-size: 8px;
             }
             
             .total-row {
                 padding: 3px 0;
-                font-size: 7px;
+                font-size: 9px;
             }
             
             .total-row.final {
-                padding: 5px;
-                margin: 3px -5px -5px -5px;
-                font-size: 10px;
+                padding: 6px;
+                margin: 4px -6px -6px -6px;
+                font-size: 11px;
             }
             
-            /* Info cards muito compactos */
-            .info-cards {
-                gap: 4px;
-            }
-            
-            .info-card {
-                padding: 4px;
-            }
-            
-            .info-card-title {
-                font-size: 6px;
-                margin-bottom: 2px;
-            }
-            
-            .info-card-value {
-                font-size: 7px;
-            }
-            
-            /* Termos muito compactos */
+            /* Termos compactos */
             .terms-title {
-                font-size: 8px;
-                margin-bottom: 3px;
+                font-size: 10px;
+                margin-bottom: 4px;
             }
             
             .terms-content {
-                padding: 5px;
+                padding: 6px;
             }
             
             .terms-list li {
-                padding: 1px 0;
-                padding-left: 12px;
-                font-size: 6px;
-                line-height: 1.2;
-            }
-            
-            /* Footer muito compacto */
-            .footer-content {
-                font-size: 6px;
+                padding: 2px 0;
+                padding-left: 14px;
+                font-size: 7px;
                 line-height: 1.3;
             }
             
+            /* Footer compacto */
+            .footer-content {
+                font-size: 7px;
+                line-height: 1.4;
+            }
+            
             .footer-highlight {
-                padding: 3px;
-                margin-top: 3px;
+                padding: 4px;
+                margin-top: 4px;
             }
             
             /* Evitar quebras de página */
@@ -733,21 +712,15 @@
             .client-section,
             .items-section,
             .totals-section,
-            .info-section,
             .terms-section,
             .footer {
                 page-break-inside: avoid;
             }
             
-            /* Forçar tudo em 1 página com margens mínimas */
+            /* Página A4 com margens ajustadas */
             @page {
                 size: A4;
-                margin: 5mm;
-            }
-            
-            /* Escala geral reduzida */
-            html {
-                zoom: 0.85;
+                margin: 8mm;
             }
         }
     </style>
