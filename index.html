@@ -561,7 +561,7 @@
             Verifique se o link está correto ou entre em contato com nosso suporte.
         </div>
         <p style="color: #6c757d; font-size: 12px; margin-top: 20px;">
-            📞 (11) 2918-8119 | 📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4a2925243e2b3e250a29222326262f383a2f292b3964292527642838">[email&#160;protected]</a>
+            📞 (11) 2918-8119 | 📧 contato@chillerpecas.com.br
         </p>
     </div>
 
@@ -759,14 +759,14 @@
                 
                 <div class="footer-highlight">
                     <strong>📞 Central:</strong> (11) 2918-8119<br>
-                    <strong>📧 Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d6b5b9b8a2b7a2b996b5bebfbabab3a4a6b3b5b7a5f8b5b9bbf8b4a4">[email&#160;protected]</a><br>
+                    <strong>📧 Email:</strong> contato@chillerpecas.com.br<br>
                     <strong>🌐 Site:</strong> www.chillerpecas.com.br
                 </div>
             </div>
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Decode JWT token
         function decodeToken(token) {
             try {
@@ -910,18 +910,29 @@
             document.getElementById('contact-name').textContent = data.persons?.[0]?.name || 'N/A';
             document.getElementById('client-whatsapp').textContent = data.persons?.[0]?.phones?.[0]?.is_whatsapp ? 'Sim' : 'Não';
 
-            // Products
+            // Products - CORRIGIDO
             const productsTable = document.getElementById('products-table');
             productsTable.innerHTML = '';
 
             if (data.products && data.products.length > 0) {
                 data.products.forEach(product => {
                     const row = document.createElement('tr');
-                    const total = (product.price || 0) * (product.quantity || 1);
-                    const discountPercent = product.discount_percent || 0;
-                    const discountValue = product.discount_value || 0;
-                    const taxesPercent = product.taxes_percent || 0;
-                    const taxesValue = product.taxes_value || 0;
+                    
+                    // Cálculos corretos
+                    const unitPrice = product.price || 0;
+                    const quantity = product.quantity || 1;
+                    const subtotal = unitPrice * quantity;
+                    
+                    // Percentuais - multiplicar por 100 para exibição correta
+                    const discountPercent = (product.discount_percent || 0) * 100;
+                    const taxesPercent = (product.taxes_percent || 0) * 100;
+                    
+                    // Valores - se não vier da API, calcular manualmente
+                    const discountValue = product.discount_value || (subtotal * (product.discount_percent || 0));
+                    const taxesValue = product.taxes_value || (subtotal * (product.taxes_percent || 0));
+                    
+                    // Total final do produto
+                    const totalProduct = subtotal - discountValue + taxesValue;
                     
                     row.innerHTML = `
                         <td>
@@ -931,13 +942,13 @@
                             <div class="product-description">${product.name || 'N/A'}</div>
                             ${product.description ? `<div style="font-size: 11px; color: #6c757d; margin-top: 3px;">${product.description}</div>` : ''}
                         </td>
-                        <td style="text-align: center;">${product.quantity || 0}</td>
-                        <td style="text-align: right;">${formatCurrency(product.price)}</td>
+                        <td style="text-align: center;">${quantity}</td>
+                        <td style="text-align: right;">${formatCurrency(unitPrice)}</td>
                         <td style="text-align: right;">${discountPercent.toFixed(2)}%</td>
                         <td style="text-align: right; color: #28a745;">- ${formatCurrency(discountValue)}</td>
                         <td style="text-align: right;">${taxesPercent.toFixed(2)}%</td>
                         <td style="text-align: right;">${formatCurrency(taxesValue)}</td>
-                        <td style="text-align: right;"><strong>${formatCurrency(total)}</strong></td>
+                        <td style="text-align: right;"><strong>${formatCurrency(totalProduct)}</strong></td>
                     `;
                     productsTable.appendChild(row);
                 });
