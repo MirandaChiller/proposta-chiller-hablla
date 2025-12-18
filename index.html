@@ -526,13 +526,216 @@
         @media print {
             body {
                 background: white;
+                margin: 0;
+                padding: 0;
             }
+            
             .container {
                 box-shadow: none;
                 margin: 0;
+                max-width: 100%;
             }
+            
             #loading, .error-message, .print-button {
                 display: none !important;
+            }
+            
+            /* Reduzir espaçamentos globalmente */
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .company-logo {
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+            
+            .company-info {
+                font-size: 8px;
+                line-height: 1.3;
+            }
+            
+            .proposal-number h1 {
+                font-size: 14px;
+                margin-bottom: 3px;
+            }
+            
+            .proposal-number .number {
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+            
+            .proposal-date {
+                font-size: 8px;
+            }
+            
+            .status-badge {
+                padding: 2px 8px;
+                font-size: 7px;
+                margin-top: 3px;
+            }
+            
+            /* Seções compactas */
+            .client-section,
+            .items-section,
+            .totals-section,
+            .info-section,
+            .terms-section,
+            .cta-section,
+            .footer {
+                padding: 10px 20px;
+            }
+            
+            .section-title {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+            
+            .section-title::before {
+                height: 12px;
+                margin-right: 5px;
+            }
+            
+            /* Client grid compacto */
+            .client-grid {
+                gap: 5px;
+            }
+            
+            .info-label {
+                font-size: 7px;
+                margin-bottom: 1px;
+            }
+            
+            .info-value {
+                font-size: 9px;
+            }
+            
+            /* Tabela compacta */
+            .items-table th {
+                padding: 5px 4px;
+                font-size: 7px;
+            }
+            
+            .items-table td {
+                padding: 6px 4px;
+                font-size: 8px;
+            }
+            
+            .product-code {
+                font-size: 8px;
+            }
+            
+            .product-description {
+                font-size: 8px;
+                line-height: 1.2;
+            }
+            
+            /* Totais compactos */
+            .totals-grid {
+                gap: 10px;
+                grid-template-columns: 1fr 300px;
+            }
+            
+            .payment-info,
+            .totals-box {
+                padding: 8px;
+            }
+            
+            .payment-title {
+                font-size: 9px;
+                margin-bottom: 5px;
+            }
+            
+            .payment-item {
+                padding: 3px 0;
+                font-size: 8px;
+            }
+            
+            .total-row {
+                padding: 4px 0;
+                font-size: 9px;
+            }
+            
+            .total-row.final {
+                padding: 8px;
+                margin: 5px -8px -8px -8px;
+                font-size: 12px;
+            }
+            
+            /* Info cards compactos */
+            .info-cards {
+                gap: 8px;
+            }
+            
+            .info-card {
+                padding: 8px;
+            }
+            
+            .info-card-title {
+                font-size: 7px;
+                margin-bottom: 3px;
+            }
+            
+            .info-card-value {
+                font-size: 9px;
+            }
+            
+            /* Termos compactos */
+            .terms-title {
+                font-size: 10px;
+                margin-bottom: 5px;
+            }
+            
+            .terms-content {
+                padding: 8px;
+            }
+            
+            .terms-list li {
+                padding: 3px 0;
+                padding-left: 15px;
+                font-size: 7px;
+                line-height: 1.3;
+            }
+            
+            /* CTA compacto */
+            .cta-text-small {
+                font-size: 9px;
+                margin-bottom: 5px;
+                line-height: 1.3;
+            }
+            
+            .cta-text-large {
+                font-size: 18px;
+                line-height: 1.1;
+            }
+            
+            /* Footer compacto */
+            .footer-content {
+                font-size: 7px;
+                line-height: 1.4;
+            }
+            
+            .footer-highlight {
+                padding: 5px;
+                margin-top: 5px;
+            }
+            
+            /* Evitar quebras de página */
+            .header,
+            .client-section,
+            .items-section,
+            .totals-section,
+            .info-section,
+            .terms-section,
+            .cta-section,
+            .footer {
+                page-break-inside: avoid;
+            }
+            
+            /* Forçar tudo em 1 página */
+            @page {
+                size: A4;
+                margin: 10mm;
             }
         }
     </style>
@@ -904,7 +1107,23 @@
 
             // Client
             document.getElementById('client-name').textContent = data.name || 'N/A';
-            document.getElementById('client-document').textContent = formatDocument(data.persons?.[0]?.ssn);
+            
+            // CPF/CNPJ - tentar múltiplos caminhos possíveis
+            const cpfCnpj = data.persons?.[0]?.ssn || 
+                           data.persons?.[0]?.document || 
+                           data.persons?.[0]?.cpf || 
+                           data.persons?.[0]?.cnpj ||
+                           data.ssn ||
+                           data.document ||
+                           data.cpf ||
+                           data.cnpj;
+            
+            // Debug log
+            console.log('CPF/CNPJ encontrado:', cpfCnpj);
+            console.log('Estrutura persons:', data.persons);
+            
+            document.getElementById('client-document').textContent = formatDocument(cpfCnpj);
+            
             document.getElementById('client-phone').textContent = formatPhone(data.persons?.[0]?.phones?.[0]?.phone);
             document.getElementById('client-status').textContent = translateStatus(data.persons?.[0]?.customer_status);
             document.getElementById('contact-name').textContent = data.persons?.[0]?.name || 'N/A';
