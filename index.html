@@ -756,12 +756,78 @@
             font-size: 18px;
         }
 
+        /* Botão Aprovar Proposta */
+        .approve-button {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20923d 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .approve-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .approve-button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .approve-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .approve-button.loading {
+            background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .approve-button.success {
+            background: linear-gradient(135deg, #155724 0%, #0d3d1a 100%);
+            box-shadow: 0 4px 15px rgba(21, 87, 36, 0.3);
+        }
+
+        .approve-button.error {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .approve-icon {
+            font-size: 18px;
+        }
+
         @media (max-width: 768px) {
             .print-button {
                 top: 10px;
                 right: 10px;
                 padding: 10px 18px;
                 font-size: 12px;
+            }
+            
+            .approve-button {
+                top: 60px;
+                right: 10px;
+                padding: 10px 18px;
+                font-size: 12px;
+            }
+            
+            .approve-icon {
+                font-size: 16px;
             }
         }
 
@@ -785,7 +851,7 @@
                 max-width: 100%;
             }
             
-            #loading, .error-message, .print-button {
+            #loading, .error-message, .print-button, .approve-button {
                 display: none !important;
             }
             
@@ -1069,6 +1135,12 @@
     <button class="print-button" onclick="window.print()" title="Salvar como PDF ou Imprimir">
         <span class="print-icon">🖨️</span>
         <span>Salvar PDF</span>
+    </button>
+
+    <!-- Botão Aprovar Proposta -->
+    <button class="approve-button" id="approve-btn" onclick="approveProposal()" title="Aprovar esta proposta">
+        <span class="approve-icon">✓</span>
+        <span id="approve-text">Aprovar Proposta</span>
     </button>
 
     <!-- Loading Screen -->
@@ -1524,6 +1596,167 @@
             document.getElementById('proposal-full-id').textContent = data.id || 'N/A';
             document.getElementById('creation-date').textContent = formatDate(data.created_at);
             document.getElementById('proposal-status-text').textContent = translateStatus(data.status);
+            
+            // Salvar dados globalmente para função de aprovação
+            window.proposalData = data;
+            
+            // Configurar estado inicial do botão de aprovação
+            const approveBtn = document.getElementById('approve-btn');
+            const approveText = document.getElementById('approve-text');
+            
+            if (data.status === 'approved') {
+                approveBtn.disabled = true;
+                approveBtn.classList.add('success');
+                approveText.textContent = '✓ Já Aprovada';
+            }
+        }
+
+        // Função para aprovar proposta
+        async function approveProposal() {
+            const button = document.getElementById('approve-btn');
+            const buttonText = document.getElementById('approve-text');
+            
+            // 1. Validar status atual
+            const currentStatus = window.proposalData?.status;
+            if (currentStatus === 'approved') {
+                alert('Esta proposta já foi aprovada!');
+                return;
+            }
+            
+            // 2. Confirmar com usuário
+            const confirmMessage = 'Deseja realmente aprovar esta proposta?\n\nEsta ação atualizará o status no sistema Hablla.';
+            if (!confirm(confirmMessage)) {
+                return;
+            }
+            
+            // 3. Preparar dados
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            
+            if (!token) {
+                alert('Erro: Token não encontrado na URL.');
+                return;
+            }
+            
+            const tokenData = decodeToken(token);
+            
+            // Buscar workspace_id de múltiplas fontes possíveis
+            const workspaceId = tokenData.workspace_id?.id || tokenData.workspace?.id;
+            const quotationId = tokenData.id;
+            
+            if (!workspaceId || !quotationId) {
+                console.error('Token data:', tokenData);
+                alert('Erro: Não foi possível identificar workspace ou proposta.\n\nVerifique o console para mais detalhes.');
+                return;
+            }
+            
+            console.log('Aprovando proposta:', {
+                workspaceId,
+                quotationId,
+                endpoint: `https://api.hablla.com/v1/workspaces/${workspaceId}/quotation/${quotationId}`
+            });
+            
+            // 4. Estado de loading
+            button.disabled = true;
+            button.classList.add('loading');
+            buttonText.textContent = 'Aprovando...';
+            
+            try {
+                // 5. Fazer requisição PATCH
+                const response = await fetch(
+                    `https://api.hablla.com/v1/workspaces/${workspaceId}/quotation/${quotationId}`,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            status: 'approved'
+                        })
+                    }
+                );
+                
+                console.log('Response status:', response.status);
+                
+                if (response.ok) {
+                    // 6. SUCESSO
+                    button.classList.remove('loading');
+                    button.classList.add('success');
+                    buttonText.textContent = '✓ Proposta Aprovada!';
+                    
+                    // Atualizar badge de status na tela
+                    const statusBadge = document.getElementById('proposal-status');
+                    if (statusBadge) {
+                        statusBadge.textContent = 'Aprovada';
+                        statusBadge.classList.remove('pending');
+                    }
+                    
+                    const statusText = document.getElementById('proposal-status-text');
+                    if (statusText) {
+                        statusText.textContent = 'Aprovada';
+                    }
+                    
+                    // Atualizar dados globais
+                    if (window.proposalData) {
+                        window.proposalData.status = 'approved';
+                    }
+                    
+                    // Mensagem de sucesso
+                    setTimeout(() => {
+                        alert('✅ Proposta aprovada com sucesso!\n\nO status foi atualizado no sistema Hablla.');
+                    }, 300);
+                    
+                } else {
+                    // 7. Erro HTTP
+                    let errorData = {};
+                    try {
+                        errorData = await response.json();
+                    } catch (e) {
+                        console.error('Erro ao fazer parse do JSON de erro:', e);
+                    }
+                    
+                    console.error('Erro na resposta:', {
+                        status: response.status,
+                        statusText: response.statusText,
+                        errorData
+                    });
+                    
+                    throw new Error(errorData.message || `Erro HTTP: ${response.status}`);
+                }
+                
+            } catch (error) {
+                // 8. Tratamento de erros
+                console.error('Erro ao aprovar proposta:', error);
+                
+                button.classList.remove('loading');
+                button.classList.add('error');
+                buttonText.textContent = 'Erro ao aprovar';
+                
+                // Mensagem de erro específica
+                let errorMessage = 'Não foi possível aprovar a proposta.';
+                
+                if (error.message.includes('401')) {
+                    errorMessage += '\n\nToken expirado ou inválido.';
+                } else if (error.message.includes('403')) {
+                    errorMessage += '\n\nVocê não tem permissão para aprovar esta proposta.';
+                } else if (error.message.includes('404')) {
+                    errorMessage += '\n\nProposta não encontrada.';
+                } else if (error.message.includes('Failed to fetch')) {
+                    errorMessage += '\n\nErro de conexão. Verifique sua internet.';
+                } else {
+                    errorMessage += '\n\n' + error.message;
+                }
+                
+                alert('❌ ' + errorMessage);
+                
+                // Reabilitar botão após 3 segundos
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.classList.remove('error');
+                    buttonText.textContent = 'Tentar Novamente';
+                }, 3000);
+            }
         }
 
         // Initialize
