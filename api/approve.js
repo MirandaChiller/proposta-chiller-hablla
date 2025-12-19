@@ -35,24 +35,50 @@ export default async function handler(req, res) {
 
         console.log('Aprovando proposta via backend proxy:', {
             workspaceId,
-            quotationId,
-            endpoint: `https://api.hablla.com/v1/workspaces/${workspaceId}/quotation/${quotationId}`
+            quotationId
         });
 
-        // Fazer requisição PATCH para API Hablla
-        const habllaResponse = await fetch(
+        // Tentar múltiplos endpoints possíveis até encontrar o correto
+        const endpoints = [
+            `https://api.hablla.com/v1/quotation/${quotationId}`,
+            `https://api.hablla.com/v1/workspaces/${workspaceId}/quotations/${quotationId}`,
             `https://api.hablla.com/v1/workspaces/${workspaceId}/quotation/${quotationId}`,
-            {
+        ];
+
+        let habllaResponse = null;
+        let successEndpoint = null;
+
+        for (const endpoint of endpoints) {
+            console.log(`Tentando endpoint: ${endpoint}`);
+            
+            const testResponse = await fetch(endpoint, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    status: 'approved'
-                })
+                body: JSON.stringify({ status: 'approved' })
+            });
+
+            console.log(`Resultado: ${testResponse.status}`);
+
+            // Se não for 404, achamos o endpoint correto
+            if (testResponse.status !== 404) {
+                habllaResponse = testResponse;
+                successEndpoint = endpoint;
+                console.log(`✓ Endpoint correto: ${endpoint}`);
+                break;
             }
-        );
+        }
+
+        // Se todos deram 404
+        if (!habllaResponse || habllaResponse.status === 404) {
+            return res.status(404).json({
+                success: false,
+                error: 'Nenhum endpoint válido encontrado. Verifique a documentação da API Hablla.',
+                testedEndpoints: endpoints
+            });
+        }
 
         console.log('Hablla API response status:', habllaResponse.status);
 
