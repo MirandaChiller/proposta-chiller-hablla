@@ -1641,7 +1641,7 @@
             const tokenData = decodeToken(token);
             
             // Buscar workspace_id de múltiplas fontes possíveis
-            const workspaceId = tokenData.workspace_id?.id || tokenData.workspace?.id;
+            const workspaceId = tokenData.workspace_id?.id || tokenData.workspace;
             const quotationId = tokenData.id;
             
             if (!workspaceId || !quotationId) {
