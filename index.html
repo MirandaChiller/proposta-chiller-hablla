@@ -1640,12 +1640,26 @@
             
             const tokenData = decodeToken(token);
             
+            // DEBUG: Log completo do token decodificado
+            console.log('=== DEBUG: Token decodificado ===');
+            console.log('Token completo:', tokenData);
+            console.log('tokenData.workspace_id:', tokenData.workspace_id);
+            console.log('tokenData.workspace:', tokenData.workspace);
+            console.log('tokenData.id:', tokenData.id);
+            console.log('================================');
+            
             // Buscar workspace_id de múltiplas fontes possíveis
             const workspaceId = tokenData.workspace_id?.id || tokenData.workspace;
             const quotationId = tokenData.id;
             
+            console.log('=== DEBUG: IDs extraídos ===');
+            console.log('workspaceId:', workspaceId);
+            console.log('quotationId:', quotationId);
+            console.log('============================');
+            
             if (!workspaceId || !quotationId) {
-                console.error('Token data:', tokenData);
+                console.error('ERRO: Um dos IDs está undefined!');
+                console.error('Token data completo:', JSON.stringify(tokenData, null, 2));
                 alert('Erro: Não foi possível identificar workspace ou proposta.\n\nVerifique o console para mais detalhes.');
                 return;
             }
