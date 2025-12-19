@@ -1676,24 +1676,25 @@
             buttonText.textContent = 'Aprovando...';
             
             try {
-                // 5. Fazer requisição PATCH
-                const response = await fetch(
-                    `https://api.hablla.com/v1/workspaces/${workspaceId}/quotation/${quotationId}`,
-                    {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                            status: 'approved'
-                        })
-                    }
-                );
+                // 5. Fazer requisição via backend proxy (resolve CORS)
+                const response = await fetch('/api/approve', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        workspaceId,
+                        quotationId,
+                        token
+                    })
+                });
                 
-                console.log('Response status:', response.status);
+                console.log('Proxy response status:', response.status);
                 
-                if (response.ok) {
+                const responseData = await response.json();
+                console.log('Proxy response data:', responseData);
+                
+                if (response.ok && responseData.success) {
                     // 6. SUCESSO
                     button.classList.remove('loading');
                     button.classList.add('success');
@@ -1722,21 +1723,14 @@
                     }, 300);
                     
                 } else {
-                    // 7. Erro HTTP
-                    let errorData = {};
-                    try {
-                        errorData = await response.json();
-                    } catch (e) {
-                        console.error('Erro ao fazer parse do JSON de erro:', e);
-                    }
-                    
+                    // 7. Erro do backend ou API
                     console.error('Erro na resposta:', {
                         status: response.status,
                         statusText: response.statusText,
-                        errorData
+                        responseData
                     });
                     
-                    throw new Error(errorData.message || `Erro HTTP: ${response.status}`);
+                    throw new Error(responseData.error || responseData.message || `Erro HTTP: ${response.status}`);
                 }
                 
             } catch (error) {
